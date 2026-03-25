@@ -1,0 +1,813 @@
+import { useEffect, useRef, useState } from "react";
+import {
+  Zap, Droplets, Paintbrush2, Hammer, Car, Wrench,
+  ShieldCheck, Star, ArrowRight, CheckCircle2, XCircle,
+  MapPin, Clock, ChevronRight, Menu, X,
+  Twitter, Instagram, Linkedin, Youtube,
+  BadgeCheck, TrendingUp, MessageSquare, Lock,
+  Users, Briefcase, ThumbsUp, Building2
+} from "lucide-react";
+
+/* ============================================================
+   SHAKOSHY — Bold Industrial · Orange Energy · Dark Authority
+   Barlow Condensed (display) + Barlow (body) + Inter (UI)
+   Primary: #F97316  Dark: #111111 / #1A1A1A
+   ============================================================ */
+
+// ── Image CDN URLs ──────────────────────────────────────────
+const IMG = {
+  heroBg:        "https://d2xsxph8kpxj0f.cloudfront.net/310519663070593594/4LpDdvGUVXZjosrxkWg8mo/hero-bg-GZ8EkCjFWxU9c6mRxdmuyt.webp",
+  professionals: "https://d2xsxph8kpxj0f.cloudfront.net/310519663070593594/4LpDdvGUVXZjosrxkWg8mo/professionals-team-fsZcmigsSdcQVPgTy7m8gN.webp",
+  renovation:    "https://d2xsxph8kpxj0f.cloudfront.net/310519663070593594/4LpDdvGUVXZjosrxkWg8mo/home-renovation-C6rmaDHCgG5tPMQb33xhSA.webp",
+  appMockup:     "https://d2xsxph8kpxj0f.cloudfront.net/310519663070593594/4LpDdvGUVXZjosrxkWg8mo/app-mockup-4dStCbJ79HAmZAchWz2QGW.webp",
+  trust:         "https://d2xsxph8kpxj0f.cloudfront.net/310519663070593594/4LpDdvGUVXZjosrxkWg8mo/trust-section-D3nGD5FEMaf8snqjRjLuvW.webp",
+};
+
+// ── Intersection Observer hook ───────────────────────────────
+function useInView(threshold = 0.12) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setInView(true); obs.disconnect(); } },
+      { threshold }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return { ref, inView };
+}
+
+// ── Animated counter ─────────────────────────────────────────
+function Counter({ target, suffix = "" }: { target: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  const { ref, inView } = useInView(0.3);
+  useEffect(() => {
+    if (!inView) return;
+    let start = 0;
+    const step = Math.ceil(target / 60);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) { setCount(target); clearInterval(timer); }
+      else setCount(start);
+    }, 20);
+    return () => clearInterval(timer);
+  }, [inView, target]);
+  return <span ref={ref}>{count.toLocaleString()}{suffix}</span>;
+}
+
+// ── Fade-up wrapper ──────────────────────────────────────────
+function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const { ref, inView } = useInView();
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: inView ? 1 : 0,
+        transform: inView ? "translateY(0)" : "translateY(32px)",
+        transition: `opacity 0.65s ease ${delay}ms, transform 0.65s ease ${delay}ms`,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════
+// NAVBAR
+// ══════════════════════════════════════════════════════════════
+function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", fn);
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+
+  const links = [
+    { label: "How it Works", href: "#how" },
+    { label: "Categories", href: "#categories" },
+    { label: "For Professionals", href: "#professionals" },
+    { label: "About", href: "#about" },
+  ];
+
+  return (
+    <nav
+      style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+        transition: "background 0.3s, box-shadow 0.3s",
+        background: scrolled ? "rgba(17,17,17,0.97)" : "transparent",
+        boxShadow: scrolled ? "0 2px 24px rgba(0,0,0,0.4)" : "none",
+        backdropFilter: scrolled ? "blur(12px)" : "none",
+      }}
+    >
+      <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 72 }}>
+        {/* Logo */}
+        <a href="#" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
+          <div style={{
+            width: 36, height: 36, borderRadius: 8,
+            background: "linear-gradient(135deg, #F97316, #ea6a00)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            boxShadow: "0 4px 12px rgba(249,115,22,0.4)",
+          }}>
+            <Building2 size={20} color="white" strokeWidth={2.5} />
+          </div>
+          <span style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, fontSize: 22, color: "white", letterSpacing: "-0.02em" }}>
+            shakoshy
+          </span>
+        </a>
+
+        {/* Desktop links */}
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }} className="hidden md:flex">
+          {links.map(l => (
+            <a key={l.label} href={l.href} style={{
+              color: "rgba(255,255,255,0.75)", textDecoration: "none",
+              fontFamily: "'Poppins', sans-serif", fontWeight: 600, fontSize: 14,
+              letterSpacing: "0.04em", padding: "6px 14px", borderRadius: 6,
+              transition: "color 0.2s, background 0.2s",
+            }}
+              onMouseEnter={e => { (e.target as HTMLElement).style.color = "#F97316"; (e.target as HTMLElement).style.background = "rgba(249,115,22,0.08)"; }}
+              onMouseLeave={e => { (e.target as HTMLElement).style.color = "rgba(255,255,255,0.75)"; (e.target as HTMLElement).style.background = "transparent"; }}
+            >{l.label}</a>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <a href="#post-job" className="btn-primary hidden md:inline-flex" style={{ fontSize: 13, padding: "10px 20px" }}>
+          Post a Job
+        </a>
+
+        {/* Mobile hamburger */}
+        <button onClick={() => setOpen(!open)} className="md:hidden" style={{ background: "none", border: "none", color: "white", padding: 8 }}>
+          {open ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      {open && (
+        <div style={{ background: "rgba(17,17,17,0.98)", borderTop: "1px solid rgba(255,255,255,0.08)", padding: "1rem 1.25rem 1.5rem" }}>
+          {links.map(l => (
+            <a key={l.label} href={l.href} onClick={() => setOpen(false)} style={{
+              display: "block", color: "rgba(255,255,255,0.8)", textDecoration: "none",
+              fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 16,
+              padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.06)",
+            }}>{l.label}</a>
+          ))}
+          <a href="#post-job" className="btn-primary" style={{ marginTop: 16, width: "100%", justifyContent: "center" }}>Post a Job</a>
+        </div>
+      )}
+    </nav>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════
+// HERO
+// ══════════════════════════════════════════════════════════════
+function Hero() {
+  return (
+    <section style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", overflow: "hidden", background: "#111" }}>
+      {/* Background image */}
+      <div style={{
+        position: "absolute", inset: 0,
+        backgroundImage: `url(${IMG.heroBg})`,
+        backgroundSize: "cover", backgroundPosition: "center",
+        opacity: 0.35,
+      }} />
+      {/* Gradient overlay */}
+      <div style={{
+        position: "absolute", inset: 0,
+        background: "linear-gradient(105deg, rgba(17,17,17,0.95) 45%, rgba(17,17,17,0.5) 100%)",
+      }} />
+      {/* Orange glow */}
+      <div style={{
+        position: "absolute", top: "20%", left: "5%", width: 600, height: 600,
+        background: "radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%)",
+        pointerEvents: "none",
+      }} />
+
+      <div className="container" style={{ position: "relative", zIndex: 2, paddingTop: 100, paddingBottom: 80 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }}
+          className="grid-cols-1 lg:grid-cols-2">
+
+          {/* Left: Copy */}
+          <div>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(249,115,22,0.12)", border: "1px solid rgba(249,115,22,0.3)", borderRadius: 100, padding: "6px 14px", marginBottom: 28 }}>
+              <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#F97316" }} />
+              <span style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 700, fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "#F97316" }}>
+                Middle East & Africa's Home Services Ecosystem
+              </span>
+            </div>
+
+            <h1 style={{
+              fontFamily: "'Poppins', sans-serif", fontWeight: 900, fontSize: "clamp(2.8rem, 5vw, 4.5rem)",
+              lineHeight: 1.05, letterSpacing: "-0.03em", color: "white", marginBottom: 12,
+            }}>
+              Find trusted<br />
+              professionals<br />
+              <span style={{ color: "#F97316" }}>for any project.</span>
+            </h1>
+            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "1.15rem", color: "rgba(255,255,255,0.65)", lineHeight: 1.65, maxWidth: 480, marginBottom: 36 }}>
+              Shakoshy connects homeowners, businesses, craftsmen, and suppliers across the region through one unified platform. From hiring to sourcing materials — all in one seamless workflow.
+            </p>
+
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 40 }}>
+              <a href="#post-job" className="btn-primary" style={{ fontSize: 14, padding: "14px 28px" }}>
+                Post a Job <ArrowRight size={16} />
+              </a>
+              <a href="#professionals" className="btn-outline-white" style={{ fontSize: 14, padding: "14px 28px" }}>
+                Join as a Professional
+              </a>
+            </div>
+
+            <div style={{ display: "flex", gap: 28, flexWrap: "wrap" }}>
+              {[
+                { icon: <ShieldCheck size={15} />, label: "Verified Professionals" },
+                { icon: <TrendingUp size={15} />, label: "Transparent Bidding" },
+                { icon: <Lock size={15} />, label: "Secure Payments" },
+              ].map(f => (
+                <div key={f.label} style={{ display: "flex", alignItems: "center", gap: 7, color: "rgba(255,255,255,0.55)", fontFamily: "'Barlow', sans-serif", fontSize: 13, fontWeight: 500 }}>
+                  <span style={{ color: "#F97316" }}>{f.icon}</span>
+                  {f.label}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: Job card mockup */}
+          <div style={{ display: "flex", justifyContent: "center" }} className="hidden lg:flex">
+            <div style={{
+              background: "rgba(26,26,26,0.92)", border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: 20, padding: 24, width: 340,
+              boxShadow: "0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(249,115,22,0.08)",
+              backdropFilter: "blur(16px)",
+            }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>Active Job</span>
+                <span style={{ background: "#F97316", color: "white", fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", padding: "3px 10px", borderRadius: 100 }}>LIVE</span>
+              </div>
+              <h3 style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 20, color: "white", marginBottom: 6 }}>Kitchen Renovation</h3>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, color: "rgba(255,255,255,0.45)", fontSize: 13, marginBottom: 20, fontFamily: "'Inter', sans-serif" }}>
+                <MapPin size={12} /> Dubai, UAE
+                <span style={{ opacity: 0.4 }}>·</span>
+                <Clock size={12} /> Posted 2h ago
+              </div>
+              <img src={IMG.renovation} alt="Kitchen renovation" style={{ width: "100%", height: 140, objectFit: "cover", borderRadius: 12, marginBottom: 20 }} />
+              {[
+                { initial: "A", name: "Ahmed K.", rating: 4.9, jobs: 142, price: "AED 2,400" },
+                { initial: "M", name: "Mohamed S.", rating: 4.7, jobs: 89, price: "AED 2,100" },
+              ].map(p => (
+                <div key={p.name} style={{
+                  display: "flex", alignItems: "center", justifyContent: "space-between",
+                  background: "rgba(255,255,255,0.05)", borderRadius: 10, padding: "10px 14px", marginBottom: 8,
+                }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <div style={{ width: 32, height: 32, borderRadius: "50%", background: "#F97316", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 14, color: "white" }}>{p.initial}</div>
+                    <div>
+                      <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 700, fontSize: 14, color: "white" }}>{p.name}</div>
+                      <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.4)" }}>
+                        ★ {p.rating} · {p.jobs} jobs
+                      </div>
+                    </div>
+                  </div>
+                  <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 14, color: "#F97316" }}>{p.price}</span>
+                </div>
+              ))}
+              <button className="btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 8, fontSize: 13 }}>
+                Compare & Hire
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════
+// STATS BAR
+// ══════════════════════════════════════════════════════════════
+function StatsBar() {
+  const stats = [
+    { value: 5000, suffix: "+", label: "Active Professionals" },
+    { value: 20000, suffix: "+", label: "Completed Jobs" },
+    { value: 98, suffix: "%", label: "Positive Reviews" },
+    { value: 15, suffix: "+", label: "Cities Covered" },
+  ];
+  return (
+    <section style={{ background: "#F97316" }}>
+      <div className="container" style={{ paddingTop: "2.5rem", paddingBottom: "2.5rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem", textAlign: "center" }}
+          className="grid-cols-2 sm:grid-cols-4">
+          {stats.map((s, i) => (
+            <FadeUp key={s.label} delay={i * 80}>
+              <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: "clamp(2rem, 3.5vw, 2.8rem)", color: "white", lineHeight: 1 }}>
+                <Counter target={s.value} suffix={s.suffix} />
+              </div>
+              <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.75)", marginTop: 4 }}>
+                {s.label}
+              </div>
+            </FadeUp>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════
+// PROBLEM SECTION
+// ══════════════════════════════════════════════════════════════
+function ProblemSection() {
+  const before = [
+    "No transparency in pricing",
+    "Unverified, informal workers",
+    "Inconsistent demand for pros",
+    "Fragmented supply chains",
+  ];
+  const after = [
+    "Transparent competitive offers",
+    "Verified professional profiles",
+    "Steady job flow for professionals",
+    "Integrated materials marketplace",
+  ];
+  return (
+    <section id="about" style={{ background: "#FAFAF8", paddingTop: "6rem", paddingBottom: "6rem" }}>
+      <div className="container">
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", alignItems: "center" }}
+          className="grid-cols-1 lg:grid-cols-2">
+
+          {/* Image */}
+          <FadeUp>
+            <div style={{ position: "relative" }}>
+              <img src={IMG.professionals} alt="Shakoshy professionals" style={{ width: "100%", borderRadius: 16, objectFit: "cover", aspectRatio: "4/3", boxShadow: "0 24px 60px rgba(0,0,0,0.15)" }} />
+              <div style={{
+                position: "absolute", bottom: -20, right: -20,
+                background: "#F97316", borderRadius: 12, padding: "16px 24px",
+                boxShadow: "0 12px 32px rgba(249,115,22,0.4)",
+              }}>
+                <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: 28, color: "white", lineHeight: 1 }}>5,000+</div>
+                <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 12, color: "rgba(255,255,255,0.85)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Verified Pros</div>
+              </div>
+            </div>
+          </FadeUp>
+
+          {/* Text */}
+          <FadeUp delay={120}>
+            <p className="section-label" style={{ marginBottom: 12 }}>The Problem</p>
+            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: "clamp(2rem, 3.5vw, 3rem)", lineHeight: 1.1, letterSpacing: "-0.03em", color: "#111", marginBottom: 16 }}>
+              Why Shakoshy<br />was built
+            </h2>
+            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "1.05rem", color: "#555", lineHeight: 1.7, marginBottom: 32 }}>
+              In the Middle East and Africa, hiring qualified workers and overseeing building projects are frequently dispersed, unofficial, and ineffective. Customers struggle with trust and pricing transparency.
+            </p>
+            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "1rem", color: "#777", lineHeight: 1.7, marginBottom: 36 }}>
+              Shakoshy introduces a scalable digital ecosystem that transforms traditional offline processes into a trusted, transparent, and scalable platform.
+            </p>
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              {/* Before */}
+              <div style={{ background: "#fff5f5", border: "1px solid #fecaca", borderRadius: 12, padding: 20 }}>
+                <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#ef4444", marginBottom: 14 }}>Before</div>
+                {before.map(t => (
+                  <div key={t} style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 10 }}>
+                    <XCircle size={15} color="#ef4444" style={{ flexShrink: 0, marginTop: 2 }} />
+                    <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, color: "#444", lineHeight: 1.4 }}>{t}</span>
+                  </div>
+                ))}
+              </div>
+              {/* With Shakoshy */}
+              <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 12, padding: 20 }}>
+                <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#16a34a", marginBottom: 14 }}>With Shakoshy</div>
+                {after.map(t => (
+                  <div key={t} style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 10 }}>
+                    <CheckCircle2 size={15} color="#16a34a" style={{ flexShrink: 0, marginTop: 2 }} />
+                    <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, color: "#444", lineHeight: 1.4 }}>{t}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </FadeUp>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════
+// HOW IT WORKS
+// ══════════════════════════════════════════════════════════════
+function HowItWorks() {
+  const clientSteps = [
+    { n: "01", title: "Post Your Job", desc: "Describe your needs, upload photos, and share details in minutes." },
+    { n: "02", title: "Receive Competitive Offers", desc: "Qualified professionals send proposals tailored to your project." },
+    { n: "03", title: "Compare & Hire", desc: "Review profiles, pricing, and reviews to select the right expert." },
+    { n: "04", title: "Track Your Project", desc: "Manage communication, progress, and updates directly in the platform." },
+  ];
+  const proSteps = [
+    { n: "01", title: "Create Your Professional Profile", desc: "Showcase your expertise and completed work." },
+    { n: "02", title: "Receive Relevant Job Requests", desc: "Discover nearby opportunities matched to your skills." },
+    { n: "03", title: "Manage Workflows Digitally", desc: "Submit offers, communicate with clients, and track progress." },
+    { n: "04", title: "Build Your Reputation", desc: "Grow visibility through verified reviews and project history." },
+  ];
+
+  return (
+    <section id="how" style={{ background: "#111", paddingTop: "6rem", paddingBottom: "6rem" }}>
+      <div className="container">
+        <FadeUp>
+          <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
+            <p className="section-label" style={{ marginBottom: 12 }}>The Process</p>
+            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: "clamp(2rem, 4vw, 3.2rem)", letterSpacing: "-0.03em", color: "white" }}>
+              How Shakoshy Works
+            </h2>
+          </div>
+        </FadeUp>
+
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}
+          className="grid-cols-1 lg:grid-cols-2">
+          {/* For Clients */}
+          <FadeUp delay={80}>
+            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: 32 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 28 }}>
+                <div style={{ width: 36, height: 36, borderRadius: 8, background: "rgba(249,115,22,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <Users size={18} color="#F97316" />
+                </div>
+                <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 16, color: "white", letterSpacing: "0.02em" }}>For Clients</span>
+              </div>
+              {clientSteps.map((s, i) => (
+                <div key={s.n} style={{ display: "flex", gap: 16, marginBottom: i < 3 ? 24 : 0 }}>
+                  <div style={{ flexShrink: 0 }}>
+                    <div style={{ width: 40, height: 40, borderRadius: "50%", background: "#F97316", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: 13, color: "white" }}>{s.n}</div>
+                    {i < 3 && <div style={{ width: 1, height: 24, background: "rgba(249,115,22,0.25)", margin: "4px auto" }} />}
+                  </div>
+                  <div style={{ paddingTop: 8 }}>
+                    <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 16, color: "white", marginBottom: 4 }}>{s.title}</div>
+                    <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.5 }}>{s.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </FadeUp>
+
+          {/* For Professionals */}
+          <FadeUp delay={160}>
+            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: 32 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 28 }}>
+                <div style={{ width: 36, height: 36, borderRadius: 8, background: "rgba(249,115,22,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <Briefcase size={18} color="#F97316" />
+                </div>
+                <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 16, color: "white", letterSpacing: "0.02em" }}>For Professionals</span>
+              </div>
+              {proSteps.map((s, i) => (
+                <div key={s.n} style={{ display: "flex", gap: 16, marginBottom: i < 3 ? 24 : 0 }}>
+                  <div style={{ flexShrink: 0 }}>
+                    <div style={{ width: 40, height: 40, borderRadius: "50%", background: "rgba(255,255,255,0.08)", border: "2px solid rgba(249,115,22,0.4)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: 13, color: "#F97316" }}>{s.n}</div>
+                    {i < 3 && <div style={{ width: 1, height: 24, background: "rgba(249,115,22,0.15)", margin: "4px auto" }} />}
+                  </div>
+                  <div style={{ paddingTop: 8 }}>
+                    <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 16, color: "white", marginBottom: 4 }}>{s.title}</div>
+                    <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.5 }}>{s.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </FadeUp>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════
+// SERVICE CATEGORIES
+// ══════════════════════════════════════════════════════════════
+function Categories() {
+  const cats = [
+    { icon: <Zap size={26} />, label: "Electrical Work", color: "#F97316", bg: "rgba(249,115,22,0.1)" },
+    { icon: <Droplets size={26} />, label: "Plumbing", color: "#3b82f6", bg: "rgba(59,130,246,0.1)" },
+    { icon: <Paintbrush2 size={26} />, label: "Painting & Finishing", color: "#8b5cf6", bg: "rgba(139,92,246,0.1)" },
+    { icon: <Hammer size={26} />, label: "Renovation & Construction", color: "#F97316", bg: "rgba(249,115,22,0.1)" },
+    { icon: <Car size={26} />, label: "Automotive Services", color: "#06b6d4", bg: "rgba(6,182,212,0.1)" },
+    { icon: <Wrench size={26} />, label: "Home Maintenance", color: "#10b981", bg: "rgba(16,185,129,0.1)" },
+  ];
+  return (
+    <section id="categories" style={{ background: "#FAFAF8", paddingTop: "6rem", paddingBottom: "6rem" }}>
+      <div className="container">
+        <FadeUp>
+          <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
+            <p className="section-label" style={{ marginBottom: 12 }}>Explore Services</p>
+            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: "clamp(2rem, 4vw, 3rem)", letterSpacing: "-0.03em", color: "#111", marginBottom: 12 }}>
+              Service Categories
+            </h2>
+            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "1.05rem", color: "#777", maxWidth: 480, margin: "0 auto" }}>
+              Find the right professional for every type of project
+            </p>
+          </div>
+        </FadeUp>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.25rem" }}
+          className="grid-cols-2 sm:grid-cols-3">
+          {cats.map((c, i) => (
+            <FadeUp key={c.label} delay={i * 60}>
+              <div style={{
+                background: "white", borderRadius: 16, padding: "28px 24px",
+                border: "1px solid rgba(0,0,0,0.06)",
+                boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+                cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s",
+                textAlign: "center",
+              }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 12px 32px rgba(0,0,0,0.12)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ""; (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 12px rgba(0,0,0,0.06)"; }}
+              >
+                <div style={{ width: 60, height: 60, borderRadius: 14, background: c.bg, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", color: c.color }}>
+                  {c.icon}
+                </div>
+                <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 700, fontSize: 15, color: "#111" }}>{c.label}</div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 4, marginTop: 8, color: "#F97316", fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 12 }}>
+                  Browse <ChevronRight size={12} />
+                </div>
+              </div>
+            </FadeUp>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════
+// TRUST ENGINE
+// ══════════════════════════════════════════════════════════════
+function TrustSection() {
+  const features = [
+    { icon: <BadgeCheck size={22} />, title: "Verified professional profiles", desc: "Every contractor goes through identity and skill verification." },
+    { icon: <TrendingUp size={22} />, title: "Transparent bidding & comparison", desc: "See all offers side by side. No hidden fees." },
+    { icon: <Star size={22} />, title: "Ratings, reviews & job history", desc: "Make decisions based on real client feedback." },
+    { icon: <MessageSquare size={22} />, title: "Secure in-platform communication", desc: "All project communication stays within the platform." },
+  ];
+  return (
+    <section id="professionals" style={{ background: "#111", paddingTop: "6rem", paddingBottom: "6rem", position: "relative", overflow: "hidden" }}>
+      <div style={{ position: "absolute", top: 0, right: 0, width: 500, height: 500, background: "radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div className="container">
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", alignItems: "center" }}
+          className="grid-cols-1 lg:grid-cols-2">
+
+          <FadeUp>
+            <p className="section-label" style={{ marginBottom: 12 }}>Trust Engine</p>
+            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: "clamp(2rem, 3.5vw, 3rem)", letterSpacing: "-0.03em", color: "white", lineHeight: 1.1, marginBottom: 20 }}>
+              More than a listing.<br />
+              <span style={{ color: "#F97316" }}>A structured trust layer.</span>
+            </h2>
+            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "1.05rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.7, marginBottom: 36 }}>
+              Shakoshy organizes workflows and reputation within one system, making it the trusted operating layer for skilled work across the region.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+              {features.map((f, i) => (
+                <FadeUp key={f.title} delay={i * 70}>
+                  <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: 18 }}>
+                    <div style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(249,115,22,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#F97316", marginBottom: 12 }}>
+                      {f.icon}
+                    </div>
+                    <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 700, fontSize: 14, color: "white", marginBottom: 6 }}>{f.title}</div>
+                    <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.45)", lineHeight: 1.5 }}>{f.desc}</div>
+                  </div>
+                </FadeUp>
+              ))}
+            </div>
+          </FadeUp>
+
+          <FadeUp delay={120}>
+            <div style={{ position: "relative" }}>
+              <img src={IMG.trust} alt="Trust and reliability" style={{ width: "100%", borderRadius: 20, objectFit: "cover", aspectRatio: "4/3", boxShadow: "0 32px 80px rgba(0,0,0,0.5)" }} />
+              <div style={{
+                position: "absolute", bottom: 20, left: 20, right: 20,
+                background: "rgba(17,17,17,0.9)", backdropFilter: "blur(12px)",
+                border: "1px solid rgba(249,115,22,0.2)", borderRadius: 14, padding: "14px 18px",
+                display: "flex", alignItems: "center", gap: 14,
+              }}>
+                <div style={{ width: 44, height: 44, borderRadius: "50%", background: "#F97316", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <ThumbsUp size={20} color="white" />
+                </div>
+                <div>
+                  <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 16, color: "white" }}>98% Satisfaction Rate</div>
+                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "rgba(255,255,255,0.5)" }}>Based on 20,000+ completed jobs</div>
+                </div>
+              </div>
+            </div>
+          </FadeUp>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════
+// APP SECTION
+// ══════════════════════════════════════════════════════════════
+function AppSection() {
+  return (
+    <section style={{ background: "#FAFAF8", paddingTop: "6rem", paddingBottom: "6rem" }}>
+      <div className="container">
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }}
+          className="grid-cols-1 lg:grid-cols-2">
+
+          <FadeUp>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <img src={IMG.appMockup} alt="Shakoshy App" style={{ height: 520, objectFit: "contain", filter: "drop-shadow(0 32px 60px rgba(0,0,0,0.25))" }} />
+            </div>
+          </FadeUp>
+
+          <FadeUp delay={100}>
+            <p className="section-label" style={{ marginBottom: 12 }}>Mobile App</p>
+            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: "clamp(2rem, 3.5vw, 3rem)", letterSpacing: "-0.03em", color: "#111", lineHeight: 1.1, marginBottom: 20 }}>
+              Manage everything<br />from your pocket.
+            </h2>
+            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "1.05rem", color: "#666", lineHeight: 1.7, marginBottom: 32 }}>
+              Post jobs, compare bids, communicate with professionals, and track your project — all from the Shakoshy mobile app. Available on iOS and Android.
+            </p>
+            {[
+              "Real-time bid notifications",
+              "In-app messaging & file sharing",
+              "Project milestone tracking",
+              "Secure payment processing",
+            ].map(f => (
+              <div key={f} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+                <CheckCircle2 size={18} color="#F97316" />
+                <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 15, color: "#333", fontWeight: 500 }}>{f}</span>
+              </div>
+            ))}
+            <div style={{ display: "flex", gap: 12, marginTop: 32, flexWrap: "wrap" }}>
+              <a href="#" style={{
+                display: "inline-flex", alignItems: "center", gap: 10,
+                background: "#111", color: "white", borderRadius: 10, padding: "12px 20px",
+                textDecoration: "none", transition: "background 0.2s",
+              }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                <div>
+                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, opacity: 0.7 }}>Download on the</div>
+                  <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 700, fontSize: 14 }}>App Store</div>
+                </div>
+              </a>
+              <a href="#" style={{
+                display: "inline-flex", alignItems: "center", gap: 10,
+                background: "#111", color: "white", borderRadius: 10, padding: "12px 20px",
+                textDecoration: "none", transition: "background 0.2s",
+              }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76c.3.17.64.24.99.2l12.6-7.27-2.83-2.83-10.76 9.9zM20.68 10.3L17.5 8.47l-3.12 3.12 3.12 3.12 3.2-1.85c.91-.52.91-1.04 0-1.56zM2.17.24C1.83.68 1.67 1.24 1.67 1.9v20.2c0 .66.16 1.22.5 1.66l.09.09 11.32-11.32v-.27L2.26.15l-.09.09zM13.58 12.53l-3.12-3.12L2.17.24l12.6 7.27-1.19 5.02z"/></svg>
+                <div>
+                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, opacity: 0.7 }}>Get it on</div>
+                  <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 700, fontSize: 14 }}>Google Play</div>
+                </div>
+              </a>
+            </div>
+          </FadeUp>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════
+// CTA
+// ══════════════════════════════════════════════════════════════
+function CTASection() {
+  return (
+    <section id="post-job" style={{ position: "relative", overflow: "hidden", background: "#111", paddingTop: "6rem", paddingBottom: "6rem" }}>
+      <div style={{
+        position: "absolute", inset: 0,
+        backgroundImage: `url(${IMG.heroBg})`,
+        backgroundSize: "cover", backgroundPosition: "center 60%",
+        opacity: 0.15,
+      }} />
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(17,17,17,0.95), rgba(17,17,17,0.7))" }} />
+      <div className="container" style={{ position: "relative", zIndex: 2, textAlign: "center" }}>
+        <FadeUp>
+          <p className="section-label" style={{ marginBottom: 16 }}>Get Started</p>
+          <h2 style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: "clamp(2.2rem, 5vw, 4rem)", letterSpacing: "-0.03em", color: "white", lineHeight: 1.05, marginBottom: 20 }}>
+            Ready to build smarter?
+          </h2>
+          <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "1.1rem", color: "rgba(255,255,255,0.6)", maxWidth: 560, margin: "0 auto 40px", lineHeight: 1.65 }}>
+            Join a growing ecosystem redefining how skilled work, project workflows, and construction supply come together.
+          </p>
+          <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
+            <a href="#" className="btn-primary" style={{ fontSize: 15, padding: "16px 36px" }}>
+              Post a Job <ArrowRight size={17} />
+            </a>
+            <a href="#professionals" className="btn-outline-white" style={{ fontSize: 15, padding: "16px 36px" }}>
+              Join as a Professional
+            </a>
+          </div>
+        </FadeUp>
+      </div>
+    </section>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════
+// FOOTER
+// ══════════════════════════════════════════════════════════════
+function Footer() {
+  const platform = ["How it Works", "Service Categories", "Materials Marketplace", "Project Tracking"];
+  const forPros = ["Create Profile", "Find Jobs", "Grow Your Business", "Supplier Registration"];
+  const company = ["About Shakoshy", "Meet the Team", "Contact", "Careers"];
+
+  return (
+    <footer style={{ background: "#0a0a0a", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "4rem", paddingBottom: "2rem" }}>
+      <div className="container">
+        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: "3rem", marginBottom: "3rem" }}
+          className="grid-cols-2 sm:grid-cols-4">
+
+          {/* Brand */}
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+              <div style={{ width: 36, height: 36, borderRadius: 8, background: "linear-gradient(135deg, #F97316, #ea6a00)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Building2 size={20} color="white" strokeWidth={2.5} />
+              </div>
+              <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 20, color: "white" }}>shakoshy</span>
+            </div>
+            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.4)", lineHeight: 1.65, marginBottom: 20, maxWidth: 240 }}>
+              The Middle East & Africa's trusted home services & construction ecosystem.
+            </p>
+            <div style={{ display: "flex", gap: 10 }}>
+              {[
+                { icon: <Twitter size={16} />, href: "#" },
+                { icon: <Instagram size={16} />, href: "#" },
+                { icon: <Linkedin size={16} />, href: "#" },
+                { icon: <Youtube size={16} />, href: "#" },
+              ].map((s, i) => (
+                <a key={i} href={s.href} style={{
+                  width: 36, height: 36, borderRadius: 8,
+                  background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  color: "rgba(255,255,255,0.5)", textDecoration: "none",
+                  transition: "background 0.2s, color 0.2s",
+                }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "rgba(249,115,22,0.15)"; (e.currentTarget as HTMLElement).style.color = "#F97316"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)"; (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.5)"; }}
+                >{s.icon}</a>
+              ))}
+            </div>
+          </div>
+
+          {/* Links */}
+          {[
+            { title: "Platform", links: platform },
+            { title: "For Professionals", links: forPros },
+            { title: "Company", links: company },
+          ].map(col => (
+            <div key={col.title}>
+              <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 16 }}>{col.title}</div>
+              {col.links.map(l => (
+                <a key={l} href="#" style={{
+                  display: "block", fontFamily: "'Barlow', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.5)",
+                  textDecoration: "none", marginBottom: 10, transition: "color 0.2s",
+                }}
+                  onMouseEnter={e => (e.target as HTMLElement).style.color = "#F97316"}
+                  onMouseLeave={e => (e.target as HTMLElement).style.color = "rgba(255,255,255,0.5)"}
+                >{l}</a>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.3)" }}>
+            © 2025 Shakoshy. All rights reserved. Middle East & Africa Platform.
+          </span>
+          <div style={{ display: "flex", gap: 20 }}>
+            {["Privacy Policy", "Terms of Service", "www.shakoshy.com"].map(l => (
+              <a key={l} href="#" style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.3)", textDecoration: "none", transition: "color 0.2s" }}
+                onMouseEnter={e => (e.target as HTMLElement).style.color = "#F97316"}
+                onMouseLeave={e => (e.target as HTMLElement).style.color = "rgba(255,255,255,0.3)"}
+              >{l}</a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════
+// PAGE
+// ══════════════════════════════════════════════════════════════
+export default function Home() {
+  return (
+    <div style={{ overflowX: "hidden" }}>
+      <Navbar />
+      <Hero />
+      <StatsBar />
+      <ProblemSection />
+      <HowItWorks />
+      <Categories />
+      <TrustSection />
+      <AppSection />
+      <CTASection />
+      <Footer />
+    </div>
+  );
+}

@@ -1,0 +1,192 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   SHAKOSHY DESIGN SYSTEM
+   Philosophy: Bold Industrial · Orange Energy · Dark Authority
+   Primary: #F97316 (orange-500) — Energy, Trust, Action
+   Dark bg: #111111 / #1A1A1A — Authority, Premium
+   Light sections: #FAFAF8 — Clean contrast
+   Typography: Barlow Condensed (display) + Barlow (body) + Inter (UI)
+   ============================================================ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --radius: 0.5rem;
+  /* Shakoshy Orange */
+  --primary: oklch(0.705 0.213 47.6);       /* #F97316 orange-500 */
+  --primary-foreground: oklch(1 0 0);        /* white */
+  --primary-dark: oklch(0.62 0.21 47);       /* darker orange */
+  /* Backgrounds */
+  --background: oklch(0.985 0.002 80);       /* near-white warm */
+  --foreground: oklch(0.13 0.01 60);         /* near-black */
+  --dark-bg: oklch(0.12 0.005 60);           /* #111111 */
+  --dark-bg-2: oklch(0.16 0.006 60);         /* #1A1A1A */
+  --dark-card: oklch(0.2 0.008 60);          /* card on dark */
+  /* Cards / UI */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.13 0.01 60);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.13 0.01 60);
+  --secondary: oklch(0.96 0.003 80);
+  --secondary-foreground: oklch(0.3 0.01 60);
+  --muted: oklch(0.94 0.004 80);
+  --muted-foreground: oklch(0.52 0.015 60);
+  --accent: oklch(0.705 0.213 47.6);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.88 0.006 80);
+  --input: oklch(0.88 0.006 80);
+  --ring: oklch(0.705 0.213 47.6);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  a[href] {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+  @media (min-width: 640px) {
+    .container { padding-left: 2rem; padding-right: 2rem; }
+  }
+  @media (min-width: 1024px) {
+    .container { padding-left: 3rem; padding-right: 3rem; max-width: 1320px; }
+  }
+
+  /* Shakoshy brand button */
+  .btn-primary {
+    background: oklch(0.705 0.213 47.6);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.75rem 1.75rem;
+    border-radius: 0.375rem;
+    border: none;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-primary:hover {
+    background: oklch(0.62 0.21 47);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px oklch(0.705 0.213 47.6 / 0.35);
+  }
+  .btn-outline-white {
+    background: transparent;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.75rem 1.75rem;
+    border-radius: 0.375rem;
+    border: 2px solid rgba(255,255,255,0.5);
+    transition: border-color 0.2s, background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-outline-white:hover {
+    border-color: white;
+    background: rgba(255,255,255,0.08);
+  }
+  .btn-dark {
+    background: oklch(0.12 0.005 60);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.75rem 1.75rem;
+    border-radius: 0.375rem;
+    border: 2px solid rgba(255,255,255,0.15);
+    transition: border-color 0.2s, background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-dark:hover {
+    border-color: oklch(0.705 0.213 47.6);
+    background: oklch(0.18 0.008 60);
+  }
+
+  /* Section label */
+  .section-label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: oklch(0.705 0.213 47.6);
+  }
+
+  /* Fade-in animation */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
