@@ -109,14 +109,7 @@ function Navbar() {
       <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 72 }}>
         {/* Logo */}
         <a href="#" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-          <div style={{
-            width: 36, height: 36, borderRadius: 8,
-            background: "linear-gradient(135deg, #F97316, #ea6a00)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: "0 4px 12px rgba(249,115,22,0.4)",
-          }}>
-            <Building2 size={20} color="white" strokeWidth={2.5} />
-          </div>
+          <img src="/shakoshy-icon.png" alt="Shakoshy" style={{ width: 36, height: 36, borderRadius: 8, objectFit: "contain" }} />
           <span style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, fontSize: 22, color: "white", letterSpacing: "-0.02em" }}>
             shakoshy
           </span>
@@ -724,9 +717,7 @@ function Footer() {
           {/* Brand */}
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-              <div style={{ width: 36, height: 36, borderRadius: 8, background: "linear-gradient(135deg, #F97316, #ea6a00)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Building2 size={20} color="white" strokeWidth={2.5} />
-              </div>
+              <img src="/shakoshy-icon.png" alt="Shakoshy" style={{ width: 36, height: 36, borderRadius: 8, objectFit: "contain" }} />
               <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 20, color: "white" }}>shakoshy</span>
             </div>
             <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.4)", lineHeight: 1.65, marginBottom: 20, maxWidth: 240 }}>
