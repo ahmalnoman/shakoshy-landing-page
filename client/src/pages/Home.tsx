@@ -116,7 +116,7 @@ function Navbar() {
         </a>
 
         {/* Desktop links */}
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }} className="hidden md:flex">
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }} className="hidden lg:flex">
           {links.map(l => (
             <a key={l.label} href={l.href} style={{
               color: "rgba(255,255,255,0.75)", textDecoration: "none",
@@ -131,12 +131,12 @@ function Navbar() {
         </div>
 
         {/* CTA */}
-        <a href="#post-job" className="btn-primary hidden md:inline-flex" style={{ fontSize: 13, padding: "10px 20px" }}>
+        <a href="#post-job" className="btn-primary hidden lg:inline-flex" style={{ fontSize: 13, padding: "10px 20px" }}>
           Post a Job
         </a>
 
         {/* Mobile hamburger */}
-        <button onClick={() => setOpen(!open)} className="md:hidden" style={{ background: "none", border: "none", color: "white", padding: 8 }}>
+        <button onClick={() => setOpen(!open)} className="lg:hidden" style={{ background: "none", border: "none", color: "white", padding: 8 }}>
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
