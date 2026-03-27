@@ -116,7 +116,7 @@ function Navbar() {
         </a>
 
         {/* Desktop links */}
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }} className="hidden lg:flex">
+        <div style={{ gap: 8, alignItems: "center" }} className="hidden lg:flex">
           {links.map(l => (
             <a key={l.label} href={l.href} style={{
               color: "rgba(255,255,255,0.75)", textDecoration: "none",
@@ -184,8 +184,7 @@ function Hero() {
       }} />
 
       <div className="container" style={{ position: "relative", zIndex: 2, paddingTop: 100, paddingBottom: 80 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }}
-          className="grid-cols-1 lg:grid-cols-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
 
           {/* Left: Copy */}
           <div>
@@ -232,7 +231,7 @@ function Hero() {
           </div>
 
           {/* Right: Job card mockup */}
-          <div style={{ display: "flex", justifyContent: "center" }} className="hidden lg:flex">
+          <div style={{ justifyContent: "center" }} className="hidden lg:flex">
             <div style={{
               background: "rgba(26,26,26,0.92)", border: "1px solid rgba(255,255,255,0.1)",
               borderRadius: 20, padding: 24, width: 340,
@@ -294,8 +293,7 @@ function StatsBar() {
   return (
     <section style={{ background: "#F97316" }}>
       <div className="container" style={{ paddingTop: "2.5rem", paddingBottom: "2.5rem" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem", textAlign: "center" }}
-          className="grid-cols-2 sm:grid-cols-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
           {stats.map((s, i) => (
             <FadeUp key={s.label} delay={i * 80}>
               <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: "clamp(2rem, 3.5vw, 2.8rem)", color: "white", lineHeight: 1 }}>
@@ -331,8 +329,7 @@ function ProblemSection() {
   return (
     <section id="about" style={{ background: "#FAFAF8", paddingTop: "6rem", paddingBottom: "6rem" }}>
       <div className="container">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", alignItems: "center" }}
-          className="grid-cols-1 lg:grid-cols-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
           {/* Image */}
           <FadeUp>
@@ -362,7 +359,7 @@ function ProblemSection() {
               Shakoshy introduces a scalable digital ecosystem that transforms traditional offline processes into a trusted, transparent, and scalable platform.
             </p>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Before */}
               <div style={{ background: "#fff5f5", border: "1px solid #fecaca", borderRadius: 12, padding: 20 }}>
                 <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#ef4444", marginBottom: 14 }}>Before</div>
@@ -420,8 +417,7 @@ function HowItWorks() {
           </div>
         </FadeUp>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}
-          className="grid-cols-1 lg:grid-cols-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* For Clients */}
           <FadeUp delay={80}>
             <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: 32 }}>
@@ -502,8 +498,7 @@ function Categories() {
           </div>
         </FadeUp>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.25rem" }}
-          className="grid-cols-2 sm:grid-cols-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-5">
           {cats.map((c, i) => (
             <FadeUp key={c.label} delay={i * 60}>
               <div style={{
@@ -546,8 +541,7 @@ function TrustSection() {
     <section id="professionals" style={{ background: "#111", paddingTop: "6rem", paddingBottom: "6rem", position: "relative", overflow: "hidden" }}>
       <div style={{ position: "absolute", top: 0, right: 0, width: 500, height: 500, background: "radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
       <div className="container">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", alignItems: "center" }}
-          className="grid-cols-1 lg:grid-cols-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
           <FadeUp>
             <p className="section-label" style={{ marginBottom: 12 }}>Trust Engine</p>
@@ -558,7 +552,7 @@ function TrustSection() {
             <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "1.05rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.7, marginBottom: 36 }}>
               Shakoshy organizes workflows and reputation within one system, making it the trusted operating layer for skilled work across the region.
             </p>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               {features.map((f, i) => (
                 <FadeUp key={f.title} delay={i * 70}>
                   <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: 18 }}>
@@ -605,12 +599,11 @@ function AppSection() {
   return (
     <section style={{ background: "#FAFAF8", paddingTop: "6rem", paddingBottom: "6rem" }}>
       <div className="container">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }}
-          className="grid-cols-1 lg:grid-cols-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
 
           <FadeUp>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <img src={IMG.appMockup} alt="Shakoshy App" style={{ height: 520, objectFit: "contain", filter: "drop-shadow(0 32px 60px rgba(0,0,0,0.25))" }} />
+              <img src={IMG.appMockup} alt="Shakoshy App" style={{ maxHeight: 520, width: "100%", objectFit: "contain", filter: "drop-shadow(0 32px 60px rgba(0,0,0,0.25))" }} />
             </div>
           </FadeUp>
 
@@ -711,8 +704,7 @@ function Footer() {
   return (
     <footer style={{ background: "#0a0a0a", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "4rem", paddingBottom: "2rem" }}>
       <div className="container">
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: "3rem", marginBottom: "3rem" }}
-          className="grid-cols-2 sm:grid-cols-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
 
           {/* Brand */}
           <div>
