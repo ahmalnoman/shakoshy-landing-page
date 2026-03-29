@@ -190,3 +190,19 @@
     transform: translateY(0);
   }
 }
+
+/* ── RTL / Arabic support ─────────────────────────────────── */
+html[dir="rtl"] body,
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4 {
+  font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+}
+
+html[dir="rtl"] .btn-primary,
+html[dir="rtl"] .btn-outline-white,
+html[dir="rtl"] .btn-dark,
+html[dir="rtl"] .section-label {
+  font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+}

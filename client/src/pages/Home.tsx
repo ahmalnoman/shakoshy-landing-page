@@ -5,8 +5,10 @@ import {
   MapPin, Clock, ChevronRight, Menu, X,
   Twitter, Instagram, Linkedin, Youtube,
   BadgeCheck, TrendingUp, MessageSquare, Lock,
-  Users, Briefcase, ThumbsUp, Building2
+  Users, Briefcase, ThumbsUp, Building2,
+  Globe
 } from "lucide-react";
+import { useLang } from "@/contexts/LanguageContext";
 
 /* ============================================================
    SHAKOSHY — Bold Industrial · Orange Energy · Dark Authority
@@ -22,6 +24,12 @@ const IMG = {
   appMockup:     "https://d2xsxph8kpxj0f.cloudfront.net/310519663070593594/4LpDdvGUVXZjosrxkWg8mo/app-mockup-4dStCbJ79HAmZAchWz2QGW.webp",
   trust:         "https://d2xsxph8kpxj0f.cloudfront.net/310519663070593594/4LpDdvGUVXZjosrxkWg8mo/trust-section-D3nGD5FEMaf8snqjRjLuvW.webp",
 };
+
+// ── Font helper (switches to Arabic font when RTL) ──────────
+function ff(base: "poppins" | "barlow" | "inter", lang: "en" | "ar") {
+  const fonts = { poppins: "'Poppins'", barlow: "'Barlow'", inter: "'Inter'" };
+  return lang === "ar" ? `'Noto Sans Arabic', ${fonts[base]}, sans-serif` : `${fonts[base]}, sans-serif`;
+}
 
 // ── Intersection Observer hook ───────────────────────────────
 function useInView(threshold = 0.12) {
@@ -80,6 +88,7 @@ function FadeUp({ children, delay = 0, className = "" }: { children: React.React
 // NAVBAR
 // ══════════════════════════════════════════════════════════════
 function Navbar() {
+  const { lang, toggleLang, t } = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -90,10 +99,10 @@ function Navbar() {
   }, []);
 
   const links = [
-    { label: "How it Works", href: "#how" },
-    { label: "Categories", href: "#categories" },
-    { label: "For Professionals", href: "#professionals" },
-    { label: "About", href: "#about" },
+    { label: t("nav.howItWorks"), href: "#how" },
+    { label: t("nav.categories"), href: "#categories" },
+    { label: t("nav.forProfessionals"), href: "#professionals" },
+    { label: t("nav.about"), href: "#about" },
   ];
 
   return (
@@ -110,7 +119,7 @@ function Navbar() {
         {/* Logo */}
         <a href="#" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
           <img src="/shakoshy-icon.png" alt="Shakoshy" style={{ width: 36, height: 36, borderRadius: 8, objectFit: "contain" }} />
-          <span style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, fontSize: 22, color: "white", letterSpacing: "-0.02em" }}>
+          <span style={{ fontFamily: ff("poppins", lang), fontWeight: 800, fontSize: 22, color: "white", letterSpacing: "-0.02em" }}>
             shakoshy
           </span>
         </a>
@@ -118,9 +127,9 @@ function Navbar() {
         {/* Desktop links */}
         <div style={{ gap: 8, alignItems: "center" }} className="hidden lg:flex">
           {links.map(l => (
-            <a key={l.label} href={l.href} style={{
+            <a key={l.href} href={l.href} style={{
               color: "rgba(255,255,255,0.75)", textDecoration: "none",
-              fontFamily: "'Poppins', sans-serif", fontWeight: 600, fontSize: 14,
+              fontFamily: ff("poppins", lang), fontWeight: 600, fontSize: 14,
               letterSpacing: "0.04em", padding: "6px 14px", borderRadius: 6,
               transition: "color 0.2s, background 0.2s",
             }}
@@ -130,28 +139,51 @@ function Navbar() {
           ))}
         </div>
 
-        {/* CTA */}
-        <a href="#post-job" className="btn-primary hidden lg:inline-flex" style={{ fontSize: 13, padding: "10px 20px" }}>
-          Post a Job
-        </a>
+        {/* Right side: lang toggle + CTA */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          {/* Language toggle */}
+          <button
+            onClick={toggleLang}
+            title={lang === "en" ? "التبديل إلى العربية" : "Switch to English"}
+            style={{
+              display: "flex", alignItems: "center", gap: 6,
+              background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
+              borderRadius: 8, padding: "6px 12px",
+              color: "rgba(255,255,255,0.8)", cursor: "pointer",
+              fontFamily: lang === "ar" ? "'Poppins', sans-serif" : "'Noto Sans Arabic', sans-serif",
+              fontWeight: 600, fontSize: 13,
+              transition: "background 0.2s, border-color 0.2s",
+            }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "rgba(249,115,22,0.15)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(249,115,22,0.3)"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.15)"; }}
+          >
+            <Globe size={16} />
+            <span>{lang === "en" ? "عربي" : "EN"}</span>
+          </button>
 
-        {/* Mobile hamburger */}
-        <button onClick={() => setOpen(!open)} className="lg:hidden" style={{ background: "none", border: "none", color: "white", padding: 8 }}>
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
+          {/* CTA */}
+          <a href="#post-job" className="btn-primary hidden lg:inline-flex" style={{ fontSize: 13, padding: "10px 20px", fontFamily: ff("poppins", lang) }}>
+            {t("nav.postAJob")}
+          </a>
+
+          {/* Mobile hamburger */}
+          <button onClick={() => setOpen(!open)} className="lg:hidden" style={{ background: "none", border: "none", color: "white", padding: 8 }}>
+            {open ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
       {open && (
         <div style={{ background: "rgba(17,17,17,0.98)", borderTop: "1px solid rgba(255,255,255,0.08)", padding: "1rem 1.25rem 1.5rem" }}>
           {links.map(l => (
-            <a key={l.label} href={l.href} onClick={() => setOpen(false)} style={{
+            <a key={l.href} href={l.href} onClick={() => setOpen(false)} style={{
               display: "block", color: "rgba(255,255,255,0.8)", textDecoration: "none",
-              fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 16,
+              fontFamily: ff("barlow", lang), fontWeight: 600, fontSize: 16,
               padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.06)",
             }}>{l.label}</a>
           ))}
-          <a href="#post-job" className="btn-primary" style={{ marginTop: 16, width: "100%", justifyContent: "center" }}>Post a Job</a>
+          <a href="#post-job" className="btn-primary" style={{ marginTop: 16, width: "100%", justifyContent: "center", fontFamily: ff("poppins", lang) }}>{t("nav.postAJob")}</a>
         </div>
       )}
     </nav>
@@ -162,6 +194,7 @@ function Navbar() {
 // HERO
 // ══════════════════════════════════════════════════════════════
 function Hero() {
+  const { lang, t } = useLang();
   return (
     <section style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", overflow: "hidden", background: "#111" }}>
       {/* Background image */}
@@ -190,39 +223,39 @@ function Hero() {
           <div>
             <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(249,115,22,0.12)", border: "1px solid rgba(249,115,22,0.3)", borderRadius: 100, padding: "6px 14px", marginBottom: 28 }}>
               <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#F97316" }} />
-              <span style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 700, fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "#F97316" }}>
-                Middle East & Africa's Home Services Ecosystem
+              <span style={{ fontFamily: ff("poppins", lang), fontWeight: 700, fontSize: 11, letterSpacing: lang === "ar" ? "0.04em" : "0.16em", textTransform: lang === "ar" ? "none" : "uppercase", color: "#F97316" }}>
+                {t("hero.badge")}
               </span>
             </div>
 
             <h1 style={{
-              fontFamily: "'Poppins', sans-serif", fontWeight: 900, fontSize: "clamp(2.8rem, 5vw, 4.5rem)",
+              fontFamily: ff("poppins", lang), fontWeight: 900, fontSize: "clamp(2.8rem, 5vw, 4.5rem)",
               lineHeight: 1.05, letterSpacing: "-0.03em", color: "white", marginBottom: 12,
             }}>
-              Find trusted<br />
-              professionals<br />
-              <span style={{ color: "#F97316" }}>for any project.</span>
+              {t("hero.titleLine1")}<br />
+              {t("hero.titleLine2")}<br />
+              <span style={{ color: "#F97316" }}>{t("hero.titleHighlight")}</span>
             </h1>
-            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "1.15rem", color: "rgba(255,255,255,0.65)", lineHeight: 1.65, maxWidth: 480, marginBottom: 36 }}>
-              Shakoshy connects homeowners, businesses, craftsmen, and suppliers across the region through one unified platform. From hiring to sourcing materials — all in one seamless workflow.
+            <p style={{ fontFamily: ff("barlow", lang), fontSize: "1.15rem", color: "rgba(255,255,255,0.65)", lineHeight: 1.65, maxWidth: 480, marginBottom: 36 }}>
+              {t("hero.description")}
             </p>
 
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 40 }}>
-              <a href="#post-job" className="btn-primary" style={{ fontSize: 14, padding: "14px 28px" }}>
-                Post a Job <ArrowRight size={16} />
+              <a href="#post-job" className="btn-primary" style={{ fontSize: 14, padding: "14px 28px", fontFamily: ff("poppins", lang) }}>
+                {t("hero.postAJob")} <ArrowRight size={16} style={{ transform: lang === "ar" ? "scaleX(-1)" : "none" }} />
               </a>
-              <a href="#professionals" className="btn-outline-white" style={{ fontSize: 14, padding: "14px 28px" }}>
-                Join as a Professional
+              <a href="#professionals" className="btn-outline-white" style={{ fontSize: 14, padding: "14px 28px", fontFamily: ff("poppins", lang) }}>
+                {t("hero.joinProfessional")}
               </a>
             </div>
 
             <div style={{ display: "flex", gap: 28, flexWrap: "wrap" }}>
               {[
-                { icon: <ShieldCheck size={15} />, label: "Verified Professionals" },
-                { icon: <TrendingUp size={15} />, label: "Transparent Bidding" },
-                { icon: <Lock size={15} />, label: "Secure Payments" },
+                { icon: <ShieldCheck size={15} />, label: t("hero.verifiedPros") },
+                { icon: <TrendingUp size={15} />, label: t("hero.transparentBidding") },
+                { icon: <Lock size={15} />, label: t("hero.securePayments") },
               ].map(f => (
-                <div key={f.label} style={{ display: "flex", alignItems: "center", gap: 7, color: "rgba(255,255,255,0.55)", fontFamily: "'Barlow', sans-serif", fontSize: 13, fontWeight: 500 }}>
+                <div key={f.label} style={{ display: "flex", alignItems: "center", gap: 7, color: "rgba(255,255,255,0.55)", fontFamily: ff("barlow", lang), fontSize: 13, fontWeight: 500 }}>
                   <span style={{ color: "#F97316" }}>{f.icon}</span>
                   {f.label}
                 </div>
@@ -239,14 +272,14 @@ function Hero() {
               backdropFilter: "blur(16px)",
             }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-                <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 700, fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>Active Job</span>
-                <span style={{ background: "#F97316", color: "white", fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", padding: "3px 10px", borderRadius: 100 }}>LIVE</span>
+                <span style={{ fontFamily: ff("barlow", lang), fontWeight: 700, fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>{t("hero.activeJob")}</span>
+                <span style={{ background: "#F97316", color: "white", fontFamily: ff("barlow", lang), fontWeight: 800, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", padding: "3px 10px", borderRadius: 100 }}>{t("hero.live")}</span>
               </div>
-              <h3 style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 20, color: "white", marginBottom: 6 }}>Kitchen Renovation</h3>
-              <div style={{ display: "flex", alignItems: "center", gap: 6, color: "rgba(255,255,255,0.45)", fontSize: 13, marginBottom: 20, fontFamily: "'Inter', sans-serif" }}>
-                <MapPin size={12} /> Dubai, UAE
+              <h3 style={{ fontFamily: ff("barlow", lang), fontWeight: 800, fontSize: 20, color: "white", marginBottom: 6 }}>{t("hero.kitchenRenovation")}</h3>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, color: "rgba(255,255,255,0.45)", fontSize: 13, marginBottom: 20, fontFamily: ff("inter", lang) }}>
+                <MapPin size={12} /> {t("hero.location")}
                 <span style={{ opacity: 0.4 }}>·</span>
-                <Clock size={12} /> Posted 2h ago
+                <Clock size={12} /> {t("hero.postedAgo")}
               </div>
               <img src={IMG.renovation} alt="Kitchen renovation" style={{ width: "100%", height: 140, objectFit: "cover", borderRadius: 12, marginBottom: 20 }} />
               {[
@@ -258,19 +291,19 @@ function Hero() {
                   background: "rgba(255,255,255,0.05)", borderRadius: 10, padding: "10px 14px", marginBottom: 8,
                 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <div style={{ width: 32, height: 32, borderRadius: "50%", background: "#F97316", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 14, color: "white" }}>{p.initial}</div>
+                    <div style={{ width: 32, height: 32, borderRadius: "50%", background: "#F97316", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: ff("barlow", lang), fontWeight: 800, fontSize: 14, color: "white" }}>{p.initial}</div>
                     <div>
-                      <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 700, fontSize: 14, color: "white" }}>{p.name}</div>
-                      <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.4)" }}>
-                        ★ {p.rating} · {p.jobs} jobs
+                      <div style={{ fontFamily: ff("barlow", lang), fontWeight: 700, fontSize: 14, color: "white" }}>{p.name}</div>
+                      <div style={{ fontFamily: ff("inter", lang), fontSize: 11, color: "rgba(255,255,255,0.4)" }}>
+                        ★ {p.rating} · {p.jobs} {t("hero.jobs")}
                       </div>
                     </div>
                   </div>
-                  <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 14, color: "#F97316" }}>{p.price}</span>
+                  <span style={{ fontFamily: ff("barlow", lang), fontWeight: 800, fontSize: 14, color: "#F97316" }}>{p.price}</span>
                 </div>
               ))}
-              <button className="btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 8, fontSize: 13 }}>
-                Compare & Hire
+              <button className="btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 8, fontSize: 13, fontFamily: ff("poppins", lang) }}>
+                {t("hero.compareHire")}
               </button>
             </div>
           </div>
@@ -284,22 +317,23 @@ function Hero() {
 // STATS BAR
 // ══════════════════════════════════════════════════════════════
 function StatsBar() {
+  const { lang, t } = useLang();
   const stats = [
-    { value: 5000, suffix: "+", label: "Active Professionals" },
-    { value: 20000, suffix: "+", label: "Completed Jobs" },
-    { value: 98, suffix: "%", label: "Positive Reviews" },
-    { value: 15, suffix: "+", label: "Cities Covered" },
+    { value: 5000, suffix: "+", label: t("stats.activeProfessionals") },
+    { value: 20000, suffix: "+", label: t("stats.completedJobs") },
+    { value: 98, suffix: "%", label: t("stats.positiveReviews") },
+    { value: 15, suffix: "+", label: t("stats.citiesCovered") },
   ];
   return (
     <section style={{ background: "#F97316" }}>
       <div className="container" style={{ paddingTop: "2.5rem", paddingBottom: "2.5rem" }}>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
           {stats.map((s, i) => (
-            <FadeUp key={s.label} delay={i * 80}>
-              <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: "clamp(2rem, 3.5vw, 2.8rem)", color: "white", lineHeight: 1 }}>
+            <FadeUp key={i} delay={i * 80}>
+              <div style={{ fontFamily: ff("barlow", lang), fontWeight: 900, fontSize: "clamp(2rem, 3.5vw, 2.8rem)", color: "white", lineHeight: 1 }}>
                 <Counter target={s.value} suffix={s.suffix} />
               </div>
-              <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.75)", marginTop: 4 }}>
+              <div style={{ fontFamily: ff("barlow", lang), fontWeight: 600, fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.75)", marginTop: 4 }}>
                 {s.label}
               </div>
             </FadeUp>
@@ -314,18 +348,9 @@ function StatsBar() {
 // PROBLEM SECTION
 // ══════════════════════════════════════════════════════════════
 function ProblemSection() {
-  const before = [
-    "No transparency in pricing",
-    "Unverified, informal workers",
-    "Inconsistent demand for pros",
-    "Fragmented supply chains",
-  ];
-  const after = [
-    "Transparent competitive offers",
-    "Verified professional profiles",
-    "Steady job flow for professionals",
-    "Integrated materials marketplace",
-  ];
+  const { lang, t } = useLang();
+  const before = [t("problem.before1"), t("problem.before2"), t("problem.before3"), t("problem.before4")];
+  const after = [t("problem.after1"), t("problem.after2"), t("problem.after3"), t("problem.after4")];
   return (
     <section id="about" style={{ background: "#FAFAF8", paddingTop: "6rem", paddingBottom: "6rem" }}>
       <div className="container">
@@ -336,47 +361,47 @@ function ProblemSection() {
             <div style={{ position: "relative" }}>
               <img src={IMG.professionals} alt="Shakoshy professionals" style={{ width: "100%", borderRadius: 16, objectFit: "cover", aspectRatio: "4/3", boxShadow: "0 24px 60px rgba(0,0,0,0.15)" }} />
               <div style={{
-                position: "absolute", bottom: -20, right: -20,
+                position: "absolute", bottom: -20, ...(lang === "ar" ? { left: -20 } : { right: -20 }),
                 background: "#F97316", borderRadius: 12, padding: "16px 24px",
                 boxShadow: "0 12px 32px rgba(249,115,22,0.4)",
               }}>
-                <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: 28, color: "white", lineHeight: 1 }}>5,000+</div>
-                <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 12, color: "rgba(255,255,255,0.85)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Verified Pros</div>
+                <div style={{ fontFamily: ff("barlow", lang), fontWeight: 900, fontSize: 28, color: "white", lineHeight: 1 }}>5,000+</div>
+                <div style={{ fontFamily: ff("barlow", lang), fontWeight: 600, fontSize: 12, color: "rgba(255,255,255,0.85)", letterSpacing: "0.08em", textTransform: "uppercase" }}>{t("problem.verifiedPros")}</div>
               </div>
             </div>
           </FadeUp>
 
           {/* Text */}
           <FadeUp delay={120}>
-            <p className="section-label" style={{ marginBottom: 12 }}>The Problem</p>
-            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: "clamp(2rem, 3.5vw, 3rem)", lineHeight: 1.1, letterSpacing: "-0.03em", color: "#111", marginBottom: 16 }}>
-              Why Shakoshy<br />was built
+            <p className="section-label" style={{ marginBottom: 12, fontFamily: ff("poppins", lang) }}>{t("problem.label")}</p>
+            <h2 style={{ fontFamily: ff("barlow", lang), fontWeight: 900, fontSize: "clamp(2rem, 3.5vw, 3rem)", lineHeight: 1.1, letterSpacing: "-0.03em", color: "#111", marginBottom: 16 }}>
+              {t("problem.title")}<br />{t("problem.titleLine2")}
             </h2>
-            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "1.05rem", color: "#555", lineHeight: 1.7, marginBottom: 32 }}>
-              In the Middle East and Africa, hiring qualified workers and overseeing building projects are frequently dispersed, unofficial, and ineffective. Customers struggle with trust and pricing transparency.
+            <p style={{ fontFamily: ff("barlow", lang), fontSize: "1.05rem", color: "#555", lineHeight: 1.7, marginBottom: 32 }}>
+              {t("problem.desc1")}
             </p>
-            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "1rem", color: "#777", lineHeight: 1.7, marginBottom: 36 }}>
-              Shakoshy introduces a scalable digital ecosystem that transforms traditional offline processes into a trusted, transparent, and scalable platform.
+            <p style={{ fontFamily: ff("barlow", lang), fontSize: "1rem", color: "#777", lineHeight: 1.7, marginBottom: 36 }}>
+              {t("problem.desc2")}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Before */}
               <div style={{ background: "#fff5f5", border: "1px solid #fecaca", borderRadius: 12, padding: 20 }}>
-                <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#ef4444", marginBottom: 14 }}>Before</div>
-                {before.map(t => (
-                  <div key={t} style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 10 }}>
+                <div style={{ fontFamily: ff("barlow", lang), fontWeight: 800, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#ef4444", marginBottom: 14 }}>{t("problem.before")}</div>
+                {before.map(txt => (
+                  <div key={txt} style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 10 }}>
                     <XCircle size={15} color="#ef4444" style={{ flexShrink: 0, marginTop: 2 }} />
-                    <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, color: "#444", lineHeight: 1.4 }}>{t}</span>
+                    <span style={{ fontFamily: ff("barlow", lang), fontSize: 13, color: "#444", lineHeight: 1.4 }}>{txt}</span>
                   </div>
                 ))}
               </div>
               {/* With Shakoshy */}
               <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 12, padding: 20 }}>
-                <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#16a34a", marginBottom: 14 }}>With Shakoshy</div>
-                {after.map(t => (
-                  <div key={t} style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 10 }}>
+                <div style={{ fontFamily: ff("barlow", lang), fontWeight: 800, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#16a34a", marginBottom: 14 }}>{t("problem.withShakoshy")}</div>
+                {after.map(txt => (
+                  <div key={txt} style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 10 }}>
                     <CheckCircle2 size={15} color="#16a34a" style={{ flexShrink: 0, marginTop: 2 }} />
-                    <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, color: "#444", lineHeight: 1.4 }}>{t}</span>
+                    <span style={{ fontFamily: ff("barlow", lang), fontSize: 13, color: "#444", lineHeight: 1.4 }}>{txt}</span>
                   </div>
                 ))}
               </div>
@@ -392,17 +417,18 @@ function ProblemSection() {
 // HOW IT WORKS
 // ══════════════════════════════════════════════════════════════
 function HowItWorks() {
+  const { lang, t } = useLang();
   const clientSteps = [
-    { n: "01", title: "Post Your Job", desc: "Describe your needs, upload photos, and share details in minutes." },
-    { n: "02", title: "Receive Competitive Offers", desc: "Qualified professionals send proposals tailored to your project." },
-    { n: "03", title: "Compare & Hire", desc: "Review profiles, pricing, and reviews to select the right expert." },
-    { n: "04", title: "Track Your Project", desc: "Manage communication, progress, and updates directly in the platform." },
+    { n: "01", title: t("how.client1Title"), desc: t("how.client1Desc") },
+    { n: "02", title: t("how.client2Title"), desc: t("how.client2Desc") },
+    { n: "03", title: t("how.client3Title"), desc: t("how.client3Desc") },
+    { n: "04", title: t("how.client4Title"), desc: t("how.client4Desc") },
   ];
   const proSteps = [
-    { n: "01", title: "Create Your Professional Profile", desc: "Showcase your expertise and completed work." },
-    { n: "02", title: "Receive Relevant Job Requests", desc: "Discover nearby opportunities matched to your skills." },
-    { n: "03", title: "Manage Workflows Digitally", desc: "Submit offers, communicate with clients, and track progress." },
-    { n: "04", title: "Build Your Reputation", desc: "Grow visibility through verified reviews and project history." },
+    { n: "01", title: t("how.pro1Title"), desc: t("how.pro1Desc") },
+    { n: "02", title: t("how.pro2Title"), desc: t("how.pro2Desc") },
+    { n: "03", title: t("how.pro3Title"), desc: t("how.pro3Desc") },
+    { n: "04", title: t("how.pro4Title"), desc: t("how.pro4Desc") },
   ];
 
   return (
@@ -410,9 +436,9 @@ function HowItWorks() {
       <div className="container">
         <FadeUp>
           <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
-            <p className="section-label" style={{ marginBottom: 12 }}>The Process</p>
-            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: "clamp(2rem, 4vw, 3.2rem)", letterSpacing: "-0.03em", color: "white" }}>
-              How Shakoshy Works
+            <p className="section-label" style={{ marginBottom: 12, fontFamily: ff("poppins", lang) }}>{t("how.label")}</p>
+            <h2 style={{ fontFamily: ff("barlow", lang), fontWeight: 900, fontSize: "clamp(2rem, 4vw, 3.2rem)", letterSpacing: "-0.03em", color: "white" }}>
+              {t("how.title")}
             </h2>
           </div>
         </FadeUp>
@@ -425,17 +451,17 @@ function HowItWorks() {
                 <div style={{ width: 36, height: 36, borderRadius: 8, background: "rgba(249,115,22,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <Users size={18} color="#F97316" />
                 </div>
-                <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 16, color: "white", letterSpacing: "0.02em" }}>For Clients</span>
+                <span style={{ fontFamily: ff("barlow", lang), fontWeight: 800, fontSize: 16, color: "white", letterSpacing: "0.02em" }}>{t("how.forClients")}</span>
               </div>
               {clientSteps.map((s, i) => (
                 <div key={s.n} style={{ display: "flex", gap: 16, marginBottom: i < 3 ? 24 : 0 }}>
                   <div style={{ flexShrink: 0 }}>
-                    <div style={{ width: 40, height: 40, borderRadius: "50%", background: "#F97316", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: 13, color: "white" }}>{s.n}</div>
+                    <div style={{ width: 40, height: 40, borderRadius: "50%", background: "#F97316", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: ff("barlow", lang), fontWeight: 900, fontSize: 13, color: "white" }}>{s.n}</div>
                     {i < 3 && <div style={{ width: 1, height: 24, background: "rgba(249,115,22,0.25)", margin: "4px auto" }} />}
                   </div>
                   <div style={{ paddingTop: 8 }}>
-                    <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 16, color: "white", marginBottom: 4 }}>{s.title}</div>
-                    <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.5 }}>{s.desc}</div>
+                    <div style={{ fontFamily: ff("barlow", lang), fontWeight: 800, fontSize: 16, color: "white", marginBottom: 4 }}>{s.title}</div>
+                    <div style={{ fontFamily: ff("barlow", lang), fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.5 }}>{s.desc}</div>
                   </div>
                 </div>
               ))}
@@ -449,17 +475,17 @@ function HowItWorks() {
                 <div style={{ width: 36, height: 36, borderRadius: 8, background: "rgba(249,115,22,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <Briefcase size={18} color="#F97316" />
                 </div>
-                <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 16, color: "white", letterSpacing: "0.02em" }}>For Professionals</span>
+                <span style={{ fontFamily: ff("barlow", lang), fontWeight: 800, fontSize: 16, color: "white", letterSpacing: "0.02em" }}>{t("how.forProfessionals")}</span>
               </div>
               {proSteps.map((s, i) => (
                 <div key={s.n} style={{ display: "flex", gap: 16, marginBottom: i < 3 ? 24 : 0 }}>
                   <div style={{ flexShrink: 0 }}>
-                    <div style={{ width: 40, height: 40, borderRadius: "50%", background: "rgba(255,255,255,0.08)", border: "2px solid rgba(249,115,22,0.4)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: 13, color: "#F97316" }}>{s.n}</div>
+                    <div style={{ width: 40, height: 40, borderRadius: "50%", background: "rgba(255,255,255,0.08)", border: "2px solid rgba(249,115,22,0.4)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: ff("barlow", lang), fontWeight: 900, fontSize: 13, color: "#F97316" }}>{s.n}</div>
                     {i < 3 && <div style={{ width: 1, height: 24, background: "rgba(249,115,22,0.15)", margin: "4px auto" }} />}
                   </div>
                   <div style={{ paddingTop: 8 }}>
-                    <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 16, color: "white", marginBottom: 4 }}>{s.title}</div>
-                    <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.5 }}>{s.desc}</div>
+                    <div style={{ fontFamily: ff("barlow", lang), fontWeight: 800, fontSize: 16, color: "white", marginBottom: 4 }}>{s.title}</div>
+                    <div style={{ fontFamily: ff("barlow", lang), fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.5 }}>{s.desc}</div>
                   </div>
                 </div>
               ))}
@@ -475,32 +501,33 @@ function HowItWorks() {
 // SERVICE CATEGORIES
 // ══════════════════════════════════════════════════════════════
 function Categories() {
+  const { lang, t } = useLang();
   const cats = [
-    { icon: <Zap size={26} />, label: "Electrical Work", color: "#F97316", bg: "rgba(249,115,22,0.1)" },
-    { icon: <Droplets size={26} />, label: "Plumbing", color: "#3b82f6", bg: "rgba(59,130,246,0.1)" },
-    { icon: <Paintbrush2 size={26} />, label: "Painting & Finishing", color: "#8b5cf6", bg: "rgba(139,92,246,0.1)" },
-    { icon: <Hammer size={26} />, label: "Renovation & Construction", color: "#F97316", bg: "rgba(249,115,22,0.1)" },
-    { icon: <Car size={26} />, label: "Automotive Services", color: "#06b6d4", bg: "rgba(6,182,212,0.1)" },
-    { icon: <Wrench size={26} />, label: "Home Maintenance", color: "#10b981", bg: "rgba(16,185,129,0.1)" },
+    { icon: <Zap size={26} />, label: t("cat.electrical"), color: "#F97316", bg: "rgba(249,115,22,0.1)" },
+    { icon: <Droplets size={26} />, label: t("cat.plumbing"), color: "#3b82f6", bg: "rgba(59,130,246,0.1)" },
+    { icon: <Paintbrush2 size={26} />, label: t("cat.painting"), color: "#8b5cf6", bg: "rgba(139,92,246,0.1)" },
+    { icon: <Hammer size={26} />, label: t("cat.renovation"), color: "#F97316", bg: "rgba(249,115,22,0.1)" },
+    { icon: <Car size={26} />, label: t("cat.automotive"), color: "#06b6d4", bg: "rgba(6,182,212,0.1)" },
+    { icon: <Wrench size={26} />, label: t("cat.maintenance"), color: "#10b981", bg: "rgba(16,185,129,0.1)" },
   ];
   return (
     <section id="categories" style={{ background: "#FAFAF8", paddingTop: "6rem", paddingBottom: "6rem" }}>
       <div className="container">
         <FadeUp>
           <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
-            <p className="section-label" style={{ marginBottom: 12 }}>Explore Services</p>
-            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: "clamp(2rem, 4vw, 3rem)", letterSpacing: "-0.03em", color: "#111", marginBottom: 12 }}>
-              Service Categories
+            <p className="section-label" style={{ marginBottom: 12, fontFamily: ff("poppins", lang) }}>{t("cat.label")}</p>
+            <h2 style={{ fontFamily: ff("barlow", lang), fontWeight: 900, fontSize: "clamp(2rem, 4vw, 3rem)", letterSpacing: "-0.03em", color: "#111", marginBottom: 12 }}>
+              {t("cat.title")}
             </h2>
-            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "1.05rem", color: "#777", maxWidth: 480, margin: "0 auto" }}>
-              Find the right professional for every type of project
+            <p style={{ fontFamily: ff("barlow", lang), fontSize: "1.05rem", color: "#777", maxWidth: 480, margin: "0 auto" }}>
+              {t("cat.subtitle")}
             </p>
           </div>
         </FadeUp>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-5">
           {cats.map((c, i) => (
-            <FadeUp key={c.label} delay={i * 60}>
+            <FadeUp key={i} delay={i * 60}>
               <div style={{
                 background: "white", borderRadius: 16, padding: "28px 24px",
                 border: "1px solid rgba(0,0,0,0.06)",
@@ -514,9 +541,9 @@ function Categories() {
                 <div style={{ width: 60, height: 60, borderRadius: 14, background: c.bg, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", color: c.color }}>
                   {c.icon}
                 </div>
-                <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 700, fontSize: 15, color: "#111" }}>{c.label}</div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 4, marginTop: 8, color: "#F97316", fontFamily: "'Barlow', sans-serif", fontWeight: 600, fontSize: 12 }}>
-                  Browse <ChevronRight size={12} />
+                <div style={{ fontFamily: ff("barlow", lang), fontWeight: 700, fontSize: 15, color: "#111" }}>{c.label}</div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 4, marginTop: 8, color: "#F97316", fontFamily: ff("barlow", lang), fontWeight: 600, fontSize: 12 }}>
+                  {t("cat.browse")} <ChevronRight size={12} style={{ transform: lang === "ar" ? "scaleX(-1)" : "none" }} />
                 </div>
               </div>
             </FadeUp>
@@ -531,11 +558,12 @@ function Categories() {
 // TRUST ENGINE
 // ══════════════════════════════════════════════════════════════
 function TrustSection() {
+  const { lang, t } = useLang();
   const features = [
-    { icon: <BadgeCheck size={22} />, title: "Verified professional profiles", desc: "Every contractor goes through identity and skill verification." },
-    { icon: <TrendingUp size={22} />, title: "Transparent bidding & comparison", desc: "See all offers side by side. No hidden fees." },
-    { icon: <Star size={22} />, title: "Ratings, reviews & job history", desc: "Make decisions based on real client feedback." },
-    { icon: <MessageSquare size={22} />, title: "Secure in-platform communication", desc: "All project communication stays within the platform." },
+    { icon: <BadgeCheck size={22} />, title: t("trust.verifiedTitle"), desc: t("trust.verifiedDesc") },
+    { icon: <TrendingUp size={22} />, title: t("trust.biddingTitle"), desc: t("trust.biddingDesc") },
+    { icon: <Star size={22} />, title: t("trust.ratingsTitle"), desc: t("trust.ratingsDesc") },
+    { icon: <MessageSquare size={22} />, title: t("trust.commsTitle"), desc: t("trust.commsDesc") },
   ];
   return (
     <section id="professionals" style={{ background: "#111", paddingTop: "6rem", paddingBottom: "6rem", position: "relative", overflow: "hidden" }}>
@@ -544,23 +572,23 @@ function TrustSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
           <FadeUp>
-            <p className="section-label" style={{ marginBottom: 12 }}>Trust Engine</p>
-            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: "clamp(2rem, 3.5vw, 3rem)", letterSpacing: "-0.03em", color: "white", lineHeight: 1.1, marginBottom: 20 }}>
-              More than a listing.<br />
-              <span style={{ color: "#F97316" }}>A structured trust layer.</span>
+            <p className="section-label" style={{ marginBottom: 12, fontFamily: ff("poppins", lang) }}>{t("trust.label")}</p>
+            <h2 style={{ fontFamily: ff("barlow", lang), fontWeight: 900, fontSize: "clamp(2rem, 3.5vw, 3rem)", letterSpacing: "-0.03em", color: "white", lineHeight: 1.1, marginBottom: 20 }}>
+              {t("trust.titleLine1")}<br />
+              <span style={{ color: "#F97316" }}>{t("trust.titleHighlight")}</span>
             </h2>
-            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "1.05rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.7, marginBottom: 36 }}>
-              Shakoshy organizes workflows and reputation within one system, making it the trusted operating layer for skilled work across the region.
+            <p style={{ fontFamily: ff("barlow", lang), fontSize: "1.05rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.7, marginBottom: 36 }}>
+              {t("trust.desc")}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               {features.map((f, i) => (
-                <FadeUp key={f.title} delay={i * 70}>
+                <FadeUp key={i} delay={i * 70}>
                   <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: 18 }}>
                     <div style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(249,115,22,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#F97316", marginBottom: 12 }}>
                       {f.icon}
                     </div>
-                    <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 700, fontSize: 14, color: "white", marginBottom: 6 }}>{f.title}</div>
-                    <div style={{ fontFamily: "'Barlow', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.45)", lineHeight: 1.5 }}>{f.desc}</div>
+                    <div style={{ fontFamily: ff("barlow", lang), fontWeight: 700, fontSize: 14, color: "white", marginBottom: 6 }}>{f.title}</div>
+                    <div style={{ fontFamily: ff("barlow", lang), fontSize: 13, color: "rgba(255,255,255,0.45)", lineHeight: 1.5 }}>{f.desc}</div>
                   </div>
                 </FadeUp>
               ))}
@@ -576,12 +604,12 @@ function TrustSection() {
                 border: "1px solid rgba(249,115,22,0.2)", borderRadius: 14, padding: "14px 18px",
                 display: "flex", alignItems: "center", gap: 14,
               }}>
-                <div style={{ width: 44, height: 44, borderRadius: "50%", background: "#F97316", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div style={{ width: 44, height: 44, borderRadius: "50%", background: "#F97316", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                   <ThumbsUp size={20} color="white" />
                 </div>
                 <div>
-                  <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 16, color: "white" }}>98% Satisfaction Rate</div>
-                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: "rgba(255,255,255,0.5)" }}>Based on 20,000+ completed jobs</div>
+                  <div style={{ fontFamily: ff("barlow", lang), fontWeight: 800, fontSize: 16, color: "white" }}>{t("trust.satisfactionRate")}</div>
+                  <div style={{ fontFamily: ff("inter", lang), fontSize: 12, color: "rgba(255,255,255,0.5)" }}>{t("trust.basedOn")}</div>
                 </div>
               </div>
             </div>
@@ -596,6 +624,7 @@ function TrustSection() {
 // APP SECTION
 // ══════════════════════════════════════════════════════════════
 function AppSection() {
+  const { lang, t } = useLang();
   return (
     <section style={{ background: "#FAFAF8", paddingTop: "6rem", paddingBottom: "6rem" }}>
       <div className="container">
@@ -608,22 +637,22 @@ function AppSection() {
           </FadeUp>
 
           <FadeUp delay={100}>
-            <p className="section-label" style={{ marginBottom: 12 }}>Mobile App</p>
-            <h2 style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: "clamp(2rem, 3.5vw, 3rem)", letterSpacing: "-0.03em", color: "#111", lineHeight: 1.1, marginBottom: 20 }}>
-              Manage everything<br />from your pocket.
+            <p className="section-label" style={{ marginBottom: 12, fontFamily: ff("poppins", lang) }}>{t("app.label")}</p>
+            <h2 style={{ fontFamily: ff("barlow", lang), fontWeight: 900, fontSize: "clamp(2rem, 3.5vw, 3rem)", letterSpacing: "-0.03em", color: "#111", lineHeight: 1.1, marginBottom: 20 }}>
+              {t("app.titleLine1")}<br />{t("app.titleLine2")}
             </h2>
-            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "1.05rem", color: "#666", lineHeight: 1.7, marginBottom: 32 }}>
-              Post jobs, compare bids, communicate with professionals, and track your project — all from the Shakoshy mobile app. Available on iOS and Android.
+            <p style={{ fontFamily: ff("barlow", lang), fontSize: "1.05rem", color: "#666", lineHeight: 1.7, marginBottom: 32 }}>
+              {t("app.desc")}
             </p>
-            {[
-              "Real-time bid notifications",
-              "In-app messaging & file sharing",
-              "Project milestone tracking",
-              "Secure payment processing",
-            ].map(f => (
+            {([
+              t("app.feature1"),
+              t("app.feature2"),
+              t("app.feature3"),
+              t("app.feature4"),
+            ] as string[]).map(f => (
               <div key={f} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
-                <CheckCircle2 size={18} color="#F97316" />
-                <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: 15, color: "#333", fontWeight: 500 }}>{f}</span>
+                <CheckCircle2 size={18} color="#F97316" style={{ flexShrink: 0 }} />
+                <span style={{ fontFamily: ff("barlow", lang), fontSize: 15, color: "#333", fontWeight: 500 }}>{f}</span>
               </div>
             ))}
             <div style={{ display: "flex", gap: 12, marginTop: 32, flexWrap: "wrap" }}>
@@ -634,8 +663,8 @@ function AppSection() {
               }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
                 <div>
-                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, opacity: 0.7 }}>Download on the</div>
-                  <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 700, fontSize: 14 }}>App Store</div>
+                  <div style={{ fontFamily: ff("inter", lang), fontSize: 10, opacity: 0.7 }}>{t("app.downloadOn")}</div>
+                  <div style={{ fontFamily: ff("barlow", lang), fontWeight: 700, fontSize: 14 }}>{t("app.appStore")}</div>
                 </div>
               </a>
               <a href="#" style={{
@@ -645,8 +674,8 @@ function AppSection() {
               }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76c.3.17.64.24.99.2l12.6-7.27-2.83-2.83-10.76 9.9zM20.68 10.3L17.5 8.47l-3.12 3.12 3.12 3.12 3.2-1.85c.91-.52.91-1.04 0-1.56zM2.17.24C1.83.68 1.67 1.24 1.67 1.9v20.2c0 .66.16 1.22.5 1.66l.09.09 11.32-11.32v-.27L2.26.15l-.09.09zM13.58 12.53l-3.12-3.12L2.17.24l12.6 7.27-1.19 5.02z"/></svg>
                 <div>
-                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, opacity: 0.7 }}>Get it on</div>
-                  <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 700, fontSize: 14 }}>Google Play</div>
+                  <div style={{ fontFamily: ff("inter", lang), fontSize: 10, opacity: 0.7 }}>{t("app.getItOn")}</div>
+                  <div style={{ fontFamily: ff("barlow", lang), fontWeight: 700, fontSize: 14 }}>{t("app.googlePlay")}</div>
                 </div>
               </a>
             </div>
@@ -661,6 +690,7 @@ function AppSection() {
 // CTA
 // ══════════════════════════════════════════════════════════════
 function CTASection() {
+  const { lang, t } = useLang();
   return (
     <section id="post-job" style={{ position: "relative", overflow: "hidden", background: "#111", paddingTop: "6rem", paddingBottom: "6rem" }}>
       <div style={{
@@ -672,19 +702,19 @@ function CTASection() {
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(17,17,17,0.95), rgba(17,17,17,0.7))" }} />
       <div className="container" style={{ position: "relative", zIndex: 2, textAlign: "center" }}>
         <FadeUp>
-          <p className="section-label" style={{ marginBottom: 16 }}>Get Started</p>
-          <h2 style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 900, fontSize: "clamp(2.2rem, 5vw, 4rem)", letterSpacing: "-0.03em", color: "white", lineHeight: 1.05, marginBottom: 20 }}>
-            Ready to build smarter?
+          <p className="section-label" style={{ marginBottom: 16, fontFamily: ff("poppins", lang) }}>{t("cta.label")}</p>
+          <h2 style={{ fontFamily: ff("barlow", lang), fontWeight: 900, fontSize: "clamp(2.2rem, 5vw, 4rem)", letterSpacing: "-0.03em", color: "white", lineHeight: 1.05, marginBottom: 20 }}>
+            {t("cta.title")}
           </h2>
-          <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "1.1rem", color: "rgba(255,255,255,0.6)", maxWidth: 560, margin: "0 auto 40px", lineHeight: 1.65 }}>
-            Join a growing ecosystem redefining how skilled work, project workflows, and construction supply come together.
+          <p style={{ fontFamily: ff("barlow", lang), fontSize: "1.1rem", color: "rgba(255,255,255,0.6)", maxWidth: 560, margin: "0 auto 40px", lineHeight: 1.65 }}>
+            {t("cta.desc")}
           </p>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="#" className="btn-primary" style={{ fontSize: 15, padding: "16px 36px" }}>
-              Post a Job <ArrowRight size={17} />
+            <a href="#" className="btn-primary" style={{ fontSize: 15, padding: "16px 36px", fontFamily: ff("poppins", lang) }}>
+              {t("cta.postAJob")} <ArrowRight size={17} style={{ transform: lang === "ar" ? "scaleX(-1)" : "none" }} />
             </a>
-            <a href="#professionals" className="btn-outline-white" style={{ fontSize: 15, padding: "16px 36px" }}>
-              Join as a Professional
+            <a href="#professionals" className="btn-outline-white" style={{ fontSize: 15, padding: "16px 36px", fontFamily: ff("poppins", lang) }}>
+              {t("cta.joinProfessional")}
             </a>
           </div>
         </FadeUp>
@@ -697,9 +727,10 @@ function CTASection() {
 // FOOTER
 // ══════════════════════════════════════════════════════════════
 function Footer() {
-  const platform = ["How it Works", "Service Categories", "Materials Marketplace", "Project Tracking"];
-  const forPros = ["Create Profile", "Find Jobs", "Grow Your Business", "Supplier Registration"];
-  const company = ["About Shakoshy", "Meet the Team", "Contact", "Careers"];
+  const { lang, t } = useLang();
+  const platform = [t("footer.howItWorks"), t("footer.serviceCategories"), t("footer.materialsMarketplace"), t("footer.projectTracking")];
+  const forPros = [t("footer.createProfile"), t("footer.findJobs"), t("footer.growBusiness"), t("footer.supplierRegistration")];
+  const company = [t("footer.aboutShakoshy"), t("footer.meetTeam"), t("footer.contact"), t("footer.careers")];
 
   return (
     <footer style={{ background: "#0a0a0a", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "4rem", paddingBottom: "2rem" }}>
@@ -710,10 +741,10 @@ function Footer() {
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
               <img src="/shakoshy-icon.png" alt="Shakoshy" style={{ width: 36, height: 36, borderRadius: 8, objectFit: "contain" }} />
-              <span style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 20, color: "white" }}>shakoshy</span>
+              <span style={{ fontFamily: ff("barlow", lang), fontWeight: 800, fontSize: 20, color: "white" }}>shakoshy</span>
             </div>
-            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.4)", lineHeight: 1.65, marginBottom: 20, maxWidth: 240 }}>
-              The Middle East & Africa's trusted home services & construction ecosystem.
+            <p style={{ fontFamily: ff("barlow", lang), fontSize: 14, color: "rgba(255,255,255,0.4)", lineHeight: 1.65, marginBottom: 20, maxWidth: 240 }}>
+              {t("footer.desc")}
             </p>
             <div style={{ display: "flex", gap: 10 }}>
               {[
@@ -738,15 +769,15 @@ function Footer() {
 
           {/* Links */}
           {[
-            { title: "Platform", links: platform },
-            { title: "For Professionals", links: forPros },
-            { title: "Company", links: company },
+            { title: t("footer.platform"), links: platform },
+            { title: t("footer.forProfessionals"), links: forPros },
+            { title: t("footer.company"), links: company },
           ].map(col => (
             <div key={col.title}>
-              <div style={{ fontFamily: "'Barlow', sans-serif", fontWeight: 800, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 16 }}>{col.title}</div>
+              <div style={{ fontFamily: ff("barlow", lang), fontWeight: 800, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 16 }}>{col.title}</div>
               {col.links.map(l => (
                 <a key={l} href="#" style={{
-                  display: "block", fontFamily: "'Barlow', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.5)",
+                  display: "block", fontFamily: ff("barlow", lang), fontSize: 14, color: "rgba(255,255,255,0.5)",
                   textDecoration: "none", marginBottom: 10, transition: "color 0.2s",
                 }}
                   onMouseEnter={e => (e.target as HTMLElement).style.color = "#F97316"}
@@ -758,12 +789,12 @@ function Footer() {
         </div>
 
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.3)" }}>
-            © 2025 Shakoshy. All rights reserved. Middle East & Africa Platform.
+          <span style={{ fontFamily: ff("inter", lang), fontSize: 13, color: "rgba(255,255,255,0.3)" }}>
+            {t("footer.copyright")}
           </span>
           <div style={{ display: "flex", gap: 20 }}>
-            {["Privacy Policy", "Terms of Service", "www.shakoshy.com"].map(l => (
-              <a key={l} href="#" style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.3)", textDecoration: "none", transition: "color 0.2s" }}
+            {[t("footer.privacy"), t("footer.terms"), "www.shakoshy.com"].map(l => (
+              <a key={l} href="#" style={{ fontFamily: ff("inter", lang), fontSize: 13, color: "rgba(255,255,255,0.3)", textDecoration: "none", transition: "color 0.2s" }}
                 onMouseEnter={e => (e.target as HTMLElement).style.color = "#F97316"}
                 onMouseLeave={e => (e.target as HTMLElement).style.color = "rgba(255,255,255,0.3)"}
               >{l}</a>
