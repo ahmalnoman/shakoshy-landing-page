@@ -162,7 +162,7 @@ function Navbar() {
           </button>
 
           {/* CTA */}
-          <a href="#post-job" className="btn-primary hidden lg:inline-flex" style={{ fontSize: 13, padding: "10px 20px", fontFamily: ff("poppins", lang) }}>
+          <a href="/post-job" className="btn-primary hidden lg:inline-flex" style={{ fontSize: 13, padding: "10px 20px", fontFamily: ff("poppins", lang) }}>
             {t("nav.postAJob")}
           </a>
 
@@ -183,7 +183,7 @@ function Navbar() {
               padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.06)",
             }}>{l.label}</a>
           ))}
-          <a href="#post-job" className="btn-primary" style={{ marginTop: 16, width: "100%", justifyContent: "center", fontFamily: ff("poppins", lang) }}>{t("nav.postAJob")}</a>
+          <a href="/post-job" className="btn-primary" style={{ marginTop: 16, width: "100%", justifyContent: "center", fontFamily: ff("poppins", lang) }}>{t("nav.postAJob")}</a>
         </div>
       )}
     </nav>
@@ -241,7 +241,7 @@ function Hero() {
             </p>
 
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 40 }}>
-              <a href="#post-job" className="btn-primary" style={{ fontSize: 14, padding: "14px 28px", fontFamily: ff("poppins", lang) }}>
+              <a href="/post-job" className="btn-primary" style={{ fontSize: 14, padding: "14px 28px", fontFamily: ff("poppins", lang) }}>
                 {t("hero.postAJob")} <ArrowRight size={16} style={{ transform: lang === "ar" ? "scaleX(-1)" : "none" }} />
               </a>
               <a href="#professionals" className="btn-outline-white" style={{ fontSize: 14, padding: "14px 28px", fontFamily: ff("poppins", lang) }}>
