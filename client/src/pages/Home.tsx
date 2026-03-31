@@ -244,7 +244,7 @@ function Hero() {
               <a href="/post-job" className="btn-primary" style={{ fontSize: 14, padding: "14px 28px", fontFamily: ff("poppins", lang) }}>
                 {t("hero.postAJob")} <ArrowRight size={16} style={{ transform: lang === "ar" ? "scaleX(-1)" : "none" }} />
               </a>
-              <a href="#professionals" className="btn-outline-white" style={{ fontSize: 14, padding: "14px 28px", fontFamily: ff("poppins", lang) }}>
+              <a href="/join-professional" className="btn-outline-white" style={{ fontSize: 14, padding: "14px 28px", fontFamily: ff("poppins", lang) }}>
                 {t("hero.joinProfessional")}
               </a>
             </div>
@@ -713,7 +713,7 @@ function CTASection() {
             <a href="#" className="btn-primary" style={{ fontSize: 15, padding: "16px 36px", fontFamily: ff("poppins", lang) }}>
               {t("cta.postAJob")} <ArrowRight size={17} style={{ transform: lang === "ar" ? "scaleX(-1)" : "none" }} />
             </a>
-            <a href="#professionals" className="btn-outline-white" style={{ fontSize: 15, padding: "16px 36px", fontFamily: ff("poppins", lang) }}>
+            <a href="/join-professional" className="btn-outline-white" style={{ fontSize: 15, padding: "16px 36px", fontFamily: ff("poppins", lang) }}>
               {t("cta.joinProfessional")}
             </a>
           </div>

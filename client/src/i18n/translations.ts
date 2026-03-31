@@ -354,6 +354,134 @@ export const translations = {
   "postJob.q.flooring.q1.a1": { en: "Tile installation", ar: "تركيب بلاط" },
   "postJob.q.flooring.q1.a2": { en: "Floor repair", ar: "إصلاح أرضية" },
   "postJob.q.flooring.q1.a3": { en: "Room-specific flooring", ar: "أرضيات غرفة محددة" },
+
+  // ── Join as Professional ───────────────────────────────────
+  "joinPro.badge": { en: "Grow Your Business", ar: "طوّر عملك" },
+  "joinPro.title": { en: "Join as a Professional", ar: "انضم كمحترف" },
+  "joinPro.subtitle": {
+    en: "Create your profile and start receiving job requests from clients in your area.",
+    ar: "أنشئ ملفك الشخصي وابدأ في تلقي طلبات العمل من العملاء في منطقتك.",
+  },
+  "joinPro.step1.label": { en: "Create Account", ar: "إنشاء حساب" },
+  "joinPro.step2.label": { en: "Professional Profile", ar: "الملف المهني" },
+  "joinPro.step3.label": { en: "Portfolio", ar: "أعمال سابقة" },
+  "joinPro.step4.label": { en: "Welcome", ar: "مرحباً" },
+
+  // Step 1: Create Account
+  "joinPro.fullName": { en: "Full Name", ar: "الاسم الكامل" },
+  "joinPro.fullNamePlaceholder": { en: "Enter your full name", ar: "أدخل اسمك الكامل" },
+  "joinPro.phone": { en: "Phone Number", ar: "رقم الهاتف" },
+  "joinPro.phonePlaceholder": { en: "e.g. 01012345678", ar: "مثال: 01012345678" },
+  "joinPro.email": { en: "Email Address", ar: "البريد الإلكتروني" },
+  "joinPro.emailPlaceholder": { en: "you@example.com", ar: "you@example.com" },
+  "joinPro.password": { en: "Password", ar: "كلمة المرور" },
+  "joinPro.passwordPlaceholder": { en: "Min 8 characters", ar: "8 أحرف على الأقل" },
+  "joinPro.location": { en: "Location", ar: "الموقع" },
+  "joinPro.selectGovernorate": { en: "Select Governorate", ar: "اختر المحافظة" },
+
+  // Step 2: Professional Profile
+  "joinPro.services": { en: "Services You Offer", ar: "الخدمات التي تقدمها" },
+  "joinPro.servicesHint": { en: "Select all that apply", ar: "اختر كل ما ينطبق" },
+  "joinPro.trustTier": { en: "Choose Your Plan", ar: "اختر خطتك" },
+  "joinPro.trustTierHint": { en: "Start free and upgrade anytime", ar: "ابدأ مجاناً وقم بالترقية في أي وقت" },
+  "joinPro.businessName": { en: "Business Name", ar: "اسم النشاط التجاري" },
+  "joinPro.businessNamePlaceholder": { en: "Company or trade name (uses your name if blank)", ar: "اسم الشركة أو النشاط (يستخدم اسمك إذا فارغ)" },
+  "joinPro.bio": { en: "About You", ar: "عن نفسك" },
+  "joinPro.bioPlaceholder": {
+    en: "Tell customers what makes you different...",
+    ar: "أخبر العملاء ما يميزك عن غيرك...",
+  },
+  "joinPro.profilePhoto": { en: "Profile Photo", ar: "صورة الملف الشخصي" },
+  "joinPro.uploadPhoto": { en: "Upload Photo", ar: "ارفع صورة" },
+  "joinPro.changePhoto": { en: "Change Photo", ar: "تغيير الصورة" },
+  "joinPro.remove": { en: "Remove", ar: "إزالة" },
+  "joinPro.optional": { en: "Optional", ar: "اختياري" },
+
+  // Trust Tier Cards
+  "joinPro.tier.basic": { en: "Basic", ar: "أساسي" },
+  "joinPro.tier.basicPrice": { en: "Free", ar: "مجاني" },
+  "joinPro.tier.basicF1": { en: "Basic profile listing", ar: "ملف شخصي أساسي" },
+  "joinPro.tier.basicF2": { en: "Receive job alerts", ar: "تلقي إشعارات الوظائف" },
+  "joinPro.tier.basicF3": { en: "Browse available jobs", ar: "تصفح الوظائف المتاحة" },
+  "joinPro.tier.verified": { en: "Verified", ar: "موثّق" },
+  "joinPro.tier.verifiedPrice": { en: "89 EGP (one-time)", ar: "٨٩ ج.م (مرة واحدة)" },
+  "joinPro.tier.verifiedF1": { en: "Blue verified badge", ar: "شارة التوثيق الزرقاء" },
+  "joinPro.tier.verifiedF2": { en: "Submit offers on jobs", ar: "تقديم عروض على الوظائف" },
+  "joinPro.tier.verifiedF3": { en: "Priority in search results", ar: "أولوية في نتائج البحث" },
+  "joinPro.tier.plus": { en: "Plus", ar: "بلس" },
+  "joinPro.tier.plusPrice": { en: "189 EGP/year", ar: "١٨٩ ج.م/سنة" },
+  "joinPro.tier.plusF1": { en: "Green crown badge", ar: "شارة التاج الأخضر" },
+  "joinPro.tier.plusF2": { en: "Ranking boost in listings", ar: "تعزيز الترتيب في القوائم" },
+  "joinPro.tier.plusF3": { en: "Featured profile placement", ar: "ظهور مميز في الملفات" },
+  "joinPro.tier.popular": { en: "Most Popular", ar: "الأكثر شيوعاً" },
+
+  // Step 3: Portfolio
+  "joinPro.portfolio": { en: "Work Samples", ar: "نماذج أعمال" },
+  "joinPro.portfolioHint": { en: "Show off your best work — up to 10 photos of previous projects", ar: "اعرض أفضل أعمالك — حتى 10 صور من مشاريع سابقة" },
+  "joinPro.uploadPhotos": { en: "Upload Photos", ar: "ارفع صور" },
+  "joinPro.max3mb": { en: "Max 3 MB each", ar: "بحد أقصى 3 ميجابايت لكل صورة" },
+  "joinPro.portfolioTip": { en: "Pro Tip", ar: "نصيحة" },
+  "joinPro.portfolioTipDesc": {
+    en: "Providers with portfolio photos get 3x more job requests. Include before/after shots and close-ups of your best work.",
+    ar: "المحترفون الذين لديهم صور أعمال يحصلون على 3 أضعاف طلبات العمل. أضف صور قبل وبعد ولقطات مقربة لأفضل أعمالك.",
+  },
+
+  // Navigation
+  "joinPro.next": { en: "Continue", ar: "متابعة" },
+  "joinPro.back": { en: "Back", ar: "رجوع" },
+  "joinPro.submit": { en: "Submit Application", ar: "إرسال الطلب" },
+  "joinPro.backToHome": { en: "Back to Home", ar: "العودة للرئيسية" },
+  "joinPro.stepOf": { en: "Step {current} of {total}", ar: "الخطوة {current} من {total}" },
+  "joinPro.profilePreview": { en: "Profile Preview", ar: "معاينة الملف" },
+  "joinPro.previewEmpty": { en: "Fill in your details to see a preview...", ar: "املأ بياناتك لرؤية المعاينة..." },
+
+  // Trust signals sidebar
+  "joinPro.whyJoin": { en: "Why join Shakoshy?", ar: "لماذا تنضم لشكوشي؟" },
+  "joinPro.trust1": { en: "Steady flow of job requests", ar: "تدفق مستمر لطلبات العمل" },
+  "joinPro.trust2": { en: "Build your verified reputation", ar: "ابنِ سمعتك الموثقة" },
+  "joinPro.trust3": { en: "Get paid securely", ar: "احصل على أموالك بأمان" },
+  "joinPro.socialProof": { en: "Verified pros earn 3x more", ar: "المحترفون الموثقون يكسبون 3 أضعاف" },
+  "joinPro.testimonial": {
+    en: "\"Since joining Shakoshy, I've doubled my monthly projects. The platform makes it easy to find clients in my area.\"",
+    ar: "\"منذ انضمامي لشكوشي، ضاعفت مشاريعي الشهرية. المنصة تسهّل إيجاد العملاء في منطقتي.\"",
+  },
+
+  // Validation errors
+  "joinPro.error.fullName": { en: "Please enter your full name (min 3 characters)", ar: "يرجى إدخال اسمك الكامل (3 أحرف على الأقل)" },
+  "joinPro.error.phone": { en: "Please enter a valid phone number", ar: "يرجى إدخال رقم هاتف صحيح" },
+  "joinPro.error.email": { en: "Please enter a valid email address", ar: "يرجى إدخال بريد إلكتروني صحيح" },
+  "joinPro.error.password": { en: "Password must be at least 8 characters", ar: "كلمة المرور يجب أن تكون 8 أحرف على الأقل" },
+  "joinPro.error.governorate": { en: "Please select a location", ar: "يرجى اختيار الموقع" },
+  "joinPro.error.services": { en: "Please select at least one service", ar: "يرجى اختيار خدمة واحدة على الأقل" },
+
+  // Success / Welcome
+  "joinPro.success.title": { en: "Welcome to Shakoshy!", ar: "مرحباً بك في شكوشي!" },
+  "joinPro.success.desc": {
+    en: "Your account has been created successfully. Our team will review your profile and activate it shortly.",
+    ar: "تم إنشاء حسابك بنجاح. سيراجع فريقنا ملفك الشخصي ويفعّله قريباً.",
+  },
+  "joinPro.success.whatsNext": { en: "What happens next?", ar: "ماذا بعد؟" },
+  "joinPro.success.next1": { en: "Our team reviews and verifies your profile", ar: "فريقنا يراجع ويتحقق من ملفك الشخصي" },
+  "joinPro.success.next2": { en: "Download the app to browse and bid on jobs", ar: "حمّل التطبيق لتصفح والمزايدة على المشاريع" },
+  "joinPro.success.next3": { en: "Unlock jobs that match your skills", ar: "افتح المشاريع المتوافقة مع مهاراتك" },
+  "joinPro.success.next4": { en: "Get hired and build your reputation", ar: "احصل على عمل وابنِ سمعتك" },
+  "joinPro.success.downloadApp": { en: "Download the Shakoshy App", ar: "حمّل تطبيق شكوشي" },
+  "joinPro.success.downloadAppDesc": {
+    en: "Browse jobs, submit offers, and manage your projects on the go.",
+    ar: "تصفح المشاريع، قدّم عروضك، وأدِر مشاريعك أينما كنت.",
+  },
+
+  // Categories
+  "joinPro.cat.plumbing": { en: "Plumbing", ar: "سباكة" },
+  "joinPro.cat.ac": { en: "AC Services", ar: "تكييف" },
+  "joinPro.cat.electrical": { en: "Electrical Work", ar: "أعمال كهربائية" },
+  "joinPro.cat.painting": { en: "Painting & Finishing", ar: "دهان وتشطيبات" },
+  "joinPro.cat.carpentry": { en: "Carpentry", ar: "نجارة" },
+  "joinPro.cat.cleaning": { en: "Cleaning", ar: "تنظيف" },
+  "joinPro.cat.flooring": { en: "Flooring & Tiling", ar: "أرضيات وبلاط" },
+  "joinPro.cat.renovation": { en: "Renovation", ar: "تجديد" },
+  "joinPro.cat.maintenance": { en: "Maintenance", ar: "صيانة" },
+  "joinPro.cat.automotive": { en: "Automotive", ar: "خدمات سيارات" },
 } as const;
 
 export type TranslationKey = keyof typeof translations;
