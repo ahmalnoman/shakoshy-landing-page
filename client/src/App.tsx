@@ -8,6 +8,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import Home from "./pages/Home";
 import PostJob from "./pages/PostJob";
 import JoinProfessional from "./pages/JoinProfessional";
+import CategoryBrowse from "./pages/CategoryBrowse";
 
 function Router() {
   return (
@@ -15,6 +16,7 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/post-job"} component={PostJob} />
       <Route path={"/join-professional"} component={JoinProfessional} />
+      <Route path={"/category/:slug"} component={CategoryBrowse} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

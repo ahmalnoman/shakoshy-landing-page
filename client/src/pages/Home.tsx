@@ -503,12 +503,12 @@ function HowItWorks() {
 function Categories() {
   const { lang, t } = useLang();
   const cats = [
-    { icon: <Zap size={26} />, label: t("cat.electrical"), color: "#F97316", bg: "rgba(249,115,22,0.1)" },
-    { icon: <Droplets size={26} />, label: t("cat.plumbing"), color: "#3b82f6", bg: "rgba(59,130,246,0.1)" },
-    { icon: <Paintbrush2 size={26} />, label: t("cat.painting"), color: "#8b5cf6", bg: "rgba(139,92,246,0.1)" },
-    { icon: <Hammer size={26} />, label: t("cat.renovation"), color: "#F97316", bg: "rgba(249,115,22,0.1)" },
-    { icon: <Car size={26} />, label: t("cat.automotive"), color: "#06b6d4", bg: "rgba(6,182,212,0.1)" },
-    { icon: <Wrench size={26} />, label: t("cat.maintenance"), color: "#10b981", bg: "rgba(16,185,129,0.1)" },
+    { icon: <Zap size={26} />, label: t("cat.electrical"), color: "#F97316", bg: "rgba(249,115,22,0.1)", slug: "electrical" },
+    { icon: <Droplets size={26} />, label: t("cat.plumbing"), color: "#3b82f6", bg: "rgba(59,130,246,0.1)", slug: "plumbing" },
+    { icon: <Paintbrush2 size={26} />, label: t("cat.painting"), color: "#8b5cf6", bg: "rgba(139,92,246,0.1)", slug: "painting" },
+    { icon: <Hammer size={26} />, label: t("cat.renovation"), color: "#F97316", bg: "rgba(249,115,22,0.1)", slug: "renovation" },
+    { icon: <Car size={26} />, label: t("cat.automotive"), color: "#06b6d4", bg: "rgba(6,182,212,0.1)", slug: "automotive" },
+    { icon: <Wrench size={26} />, label: t("cat.maintenance"), color: "#10b981", bg: "rgba(16,185,129,0.1)", slug: "maintenance" },
   ];
   return (
     <section id="categories" style={{ background: "#FAFAF8", paddingTop: "6rem", paddingBottom: "6rem" }}>
@@ -528,24 +528,26 @@ function Categories() {
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-5">
           {cats.map((c, i) => (
             <FadeUp key={i} delay={i * 60}>
-              <div style={{
-                background: "white", borderRadius: 16, padding: "28px 24px",
-                border: "1px solid rgba(0,0,0,0.06)",
-                boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
-                cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s",
-                textAlign: "center",
-              }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 12px 32px rgba(0,0,0,0.12)"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ""; (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 12px rgba(0,0,0,0.06)"; }}
-              >
-                <div style={{ width: 60, height: 60, borderRadius: 14, background: c.bg, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", color: c.color }}>
-                  {c.icon}
+              <a href={`/category/${c.slug}`} style={{ textDecoration: "none", display: "block" }}>
+                <div style={{
+                  background: "white", borderRadius: 16, padding: "28px 24px",
+                  border: "1px solid rgba(0,0,0,0.06)",
+                  boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+                  cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s",
+                  textAlign: "center",
+                }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 12px 32px rgba(0,0,0,0.12)"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ""; (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 12px rgba(0,0,0,0.06)"; }}
+                >
+                  <div style={{ width: 60, height: 60, borderRadius: 14, background: c.bg, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", color: c.color }}>
+                    {c.icon}
+                  </div>
+                  <div style={{ fontFamily: ff("barlow", lang), fontWeight: 700, fontSize: 15, color: "#111" }}>{c.label}</div>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 4, marginTop: 8, color: "#F97316", fontFamily: ff("barlow", lang), fontWeight: 600, fontSize: 12 }}>
+                    {t("cat.browse")} <ChevronRight size={12} style={{ transform: lang === "ar" ? "scaleX(-1)" : "none" }} />
+                  </div>
                 </div>
-                <div style={{ fontFamily: ff("barlow", lang), fontWeight: 700, fontSize: 15, color: "#111" }}>{c.label}</div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 4, marginTop: 8, color: "#F97316", fontFamily: ff("barlow", lang), fontWeight: 600, fontSize: 12 }}>
-                  {t("cat.browse")} <ChevronRight size={12} style={{ transform: lang === "ar" ? "scaleX(-1)" : "none" }} />
-                </div>
-              </div>
+              </a>
             </FadeUp>
           ))}
         </div>
