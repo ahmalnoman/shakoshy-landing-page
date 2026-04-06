@@ -7,6 +7,7 @@ export const translations = {
   "nav.forProfessionals": { en: "For Professionals", ar: "للمحترفين" },
   "nav.about": { en: "About", ar: "عن شكوشي" },
   "nav.postAJob": { en: "Post a Job", ar: "انشر شغلانة" },
+  "nav.loginProfessional": { en: "Login as a Professional", ar: "دخول كمحترف" },
 
   // ── Hero ────────────────────────────────────────────────────
   "hero.badge": {

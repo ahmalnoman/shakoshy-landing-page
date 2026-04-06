@@ -161,6 +161,69 @@ function Navbar() {
             <span>{lang === "en" ? "عربي" : "EN"}</span>
           </button>
 
+          {/* Unique pro login CTA */}
+          <a
+            href="/professional/dashboard"
+            className="inline-flex"
+            style={{
+              position: "relative",
+              alignItems: "center",
+              gap: 8,
+              textDecoration: "none",
+              borderRadius: 999,
+              padding: "9px 14px 9px 12px",
+              background: "linear-gradient(90deg, rgba(249,115,22,0.2), rgba(249,115,22,0.05))",
+              border: "1px solid rgba(249,115,22,0.45)",
+              color: "#FDE7D8",
+              fontFamily: ff("poppins", lang),
+              fontWeight: 700,
+              fontSize: 10,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              boxShadow: "0 10px 24px rgba(249,115,22,0.22)",
+              transition: "transform 0.2s, box-shadow 0.2s, border-color 0.2s",
+              maxWidth: 230,
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)";
+              (e.currentTarget as HTMLElement).style.boxShadow = "0 14px 30px rgba(249,115,22,0.32)";
+              (e.currentTarget as HTMLElement).style.borderColor = "rgba(249,115,22,0.7)";
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+              (e.currentTarget as HTMLElement).style.boxShadow = "0 10px 24px rgba(249,115,22,0.22)";
+              (e.currentTarget as HTMLElement).style.borderColor = "rgba(249,115,22,0.45)";
+            }}
+          >
+            <span
+              style={{
+                width: 20,
+                height: 20,
+                borderRadius: "50%",
+                background: "rgba(249,115,22,0.25)",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                border: "1px solid rgba(249,115,22,0.5)",
+                flexShrink: 0,
+              }}
+            >
+              <Briefcase size={11} />
+            </span>
+            <span
+              style={{
+                width: 6,
+                height: 6,
+                borderRadius: "50%",
+                background: "#F97316",
+                boxShadow: "0 0 0 6px rgba(249,115,22,0.12)",
+              }}
+            />
+            <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+              {t("nav.loginProfessional")}
+            </span>
+          </a>
+
           {/* CTA */}
           <a href="/post-job" className="btn-primary hidden lg:inline-flex" style={{ fontSize: 13, padding: "10px 20px", fontFamily: ff("poppins", lang) }}>
             {t("nav.postAJob")}
@@ -183,6 +246,31 @@ function Navbar() {
               padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.06)",
             }}>{l.label}</a>
           ))}
+          <a
+            href="/professional/dashboard"
+            onClick={() => setOpen(false)}
+            style={{
+              marginTop: 12,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              borderRadius: 10,
+              padding: "12px 14px",
+              textDecoration: "none",
+              background: "linear-gradient(90deg, rgba(249,115,22,0.2), rgba(249,115,22,0.06))",
+              border: "1px solid rgba(249,115,22,0.45)",
+              color: "#FDE7D8",
+              fontFamily: ff("poppins", lang),
+              fontWeight: 700,
+              fontSize: 12,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+            }}
+          >
+            <Briefcase size={14} />
+            {t("nav.loginProfessional")}
+          </a>
           <a href="/post-job" className="btn-primary" style={{ marginTop: 16, width: "100%", justifyContent: "center", fontFamily: ff("poppins", lang) }}>{t("nav.postAJob")}</a>
         </div>
       )}
