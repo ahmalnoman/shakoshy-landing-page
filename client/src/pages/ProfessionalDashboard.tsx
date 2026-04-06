@@ -6,6 +6,7 @@ import {
   CheckCircle2,
   Clock3,
   Filter,
+  Globe,
   MapPin,
   MessageSquare,
   Settings,
@@ -104,7 +105,7 @@ const initialJobs: Job[] = [
 ];
 
 export default function ProfessionalDashboard() {
-  const { lang } = useLang();
+  const { lang, toggleLang } = useLang();
   const isAr = lang === "ar";
 
   const text = {
@@ -277,7 +278,33 @@ export default function ProfessionalDashboard() {
               </p>
             </div>
 
-            <div style={{ position: "relative" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <button
+                onClick={toggleLang}
+                title={lang === "en" ? "التبديل إلى العربية" : "Switch to English"}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  borderRadius: 10,
+                  padding: "6px 12px",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  background: "rgba(255,255,255,0.05)",
+                  color: "rgba(255,255,255,0.8)",
+                  fontFamily: ff("poppins", lang),
+                  fontWeight: 600,
+                  fontSize: 13,
+                  cursor: "pointer",
+                  transition: "background 0.2s, border-color 0.2s",
+                }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "rgba(249,115,22,0.15)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(249,115,22,0.3)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.15)"; }}
+              >
+                <Globe size={16} />
+                <span>{lang === "en" ? "عربي" : "EN"}</span>
+              </button>
+
+              <div style={{ position: "relative" }}>
               <button
                 onClick={() => {
                   setNotificationsOpen((prev) => !prev);
@@ -357,6 +384,7 @@ export default function ProfessionalDashboard() {
                   ))}
                 </div>
               )}
+              </div>
             </div>
           </div>
 
