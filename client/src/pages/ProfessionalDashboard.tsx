@@ -51,6 +51,58 @@ type NotificationItem = {
   read: boolean;
 };
 
+const categoryAr: Record<string, string> = {
+  Renovation: "تجديد وبناء",
+  Electrical: "كهرباء",
+  Plumbing: "سباكة",
+  Painting: "دهان وتشطيب",
+};
+
+const jobArCopy: Record<
+  string,
+  {
+    title: string;
+    location: string;
+    budget: string;
+    postedAgo: string;
+    description: string;
+    materialsHint: string;
+  }
+> = {
+  "job-1": {
+    title: "تجديد مطبخ",
+    location: "القاهرة",
+    budget: "120,000 - 180,000 ج.م",
+    postedAgo: "من ساعتين",
+    description: "تجديد كامل للمطبخ: كابينات حديثة + أرضيات + دهان.",
+    materialsHint: "العميل عايز خامات بجودة متوسطة.",
+  },
+  "job-2": {
+    title: "تمديدات كهرباء لفيلا",
+    location: "القاهرة الجديدة",
+    budget: "40,000 - 60,000 ج.م",
+    postedAgo: "من 4 ساعات",
+    description: "إعادة سلك كهرباء لدارات قديمة وتركيب قواطع جديدة لفيلا من 3 طوابق.",
+    materialsHint: "المحترف يقدر يوفّر كابلات وقواطع.",
+  },
+  "job-3": {
+    title: "إصلاح سباكة حمام",
+    location: "الجيزة",
+    budget: "6,000 - 10,000 ج.م",
+    postedAgo: "من يوم",
+    description: "إصلاح تسريب المواسير واستبدال التركيبات التالفة في حمام رئيسي.",
+    materialsHint: "العميل اشترى الخامات/التركيبات بالفعل.",
+  },
+  "job-4": {
+    title: "دهان داخلي لمكتب",
+    location: "الإسكندرية",
+    budget: "15,000 - 22,000 ج.م",
+    postedAgo: "من يومين",
+    description: "دهان داخلي لمكتب مساحته 400 متر مع مدة تنفيذ سريعة.",
+    materialsHint: "براند الدهان محدد من قبل العميل.",
+  },
+};
+
 function ff(base: "poppins" | "barlow" | "inter", lang: "en" | "ar") {
   const fonts = { poppins: "'Poppins'", barlow: "'Barlow'", inter: "'Inter'" };
   return lang === "ar" ? `'Noto Sans Arabic', ${fonts[base]}, sans-serif` : `${fonts[base]}, sans-serif`;
@@ -107,6 +159,7 @@ const initialJobs: Job[] = [
 export default function ProfessionalDashboard() {
   const { lang, toggleLang } = useLang();
   const isAr = lang === "ar";
+  const jobCopy = (jobId: string) => jobArCopy[jobId];
 
   const text = {
     pageBadge: isAr ? "لوحة المحترفين" : "Professional Dashboard",
@@ -195,6 +248,15 @@ export default function ProfessionalDashboard() {
       Hired: { bg: "rgba(168,85,247,0.14)", color: "#c084fc" },
     };
     const style = colors[status];
+    const label = isAr
+      ? ({
+        Open: "مفتوح",
+        Applied: "تم إرسال عرض",
+        Shortlisted: "مرشح",
+        Hired: "تم التوظيف",
+      } as const)[status]
+      : status;
+
     return (
       <span
         style={{
@@ -210,7 +272,7 @@ export default function ProfessionalDashboard() {
           textTransform: "uppercase",
         }}
       >
-        {status}
+        {label}
       </span>
     );
   };
@@ -223,7 +285,7 @@ export default function ProfessionalDashboard() {
     setActiveBidJob(job);
     setAmount("");
     setTimeline("");
-    setMaterials(job.materialsHint);
+    setMaterials(isAr ? jobCopy(job.id)?.materialsHint ?? job.materialsHint : job.materialsHint);
     setMessage("");
   }
 
@@ -250,7 +312,7 @@ export default function ProfessionalDashboard() {
       {
         id: `n-${Date.now()}`,
         title: isAr ? "تم إرسال عرضك بنجاح" : "Bid submitted successfully",
-        detail: activeBidJob.title,
+        detail: isAr ? jobCopy(activeBidJob.id)?.title ?? activeBidJob.title : activeBidJob.title,
         read: false,
       },
       ...prev,
@@ -446,7 +508,7 @@ export default function ProfessionalDashboard() {
                       fontSize: 12,
                     }}
                   >
-                    {c}
+                    {c === "All" ? (isAr ? "الكل" : "All") : isAr ? categoryAr[c] ?? c : c}
                   </button>
                 ))}
               </div>
@@ -464,21 +526,35 @@ export default function ProfessionalDashboard() {
                   >
                     <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", marginBottom: 12 }}>
                       <div>
-                        <h3 style={{ margin: 0, fontFamily: ff("poppins", lang), fontWeight: 800, fontSize: 18 }}>{job.title}</h3>
+                        <h3 style={{ margin: 0, fontFamily: ff("poppins", lang), fontWeight: 800, fontSize: 18 }}>
+                          {isAr ? jobCopy(job.id)?.title ?? job.title : job.title}
+                        </h3>
                         <div style={{ display: "flex", gap: 10, marginTop: 6, color: "rgba(255,255,255,0.58)", fontFamily: ff("inter", lang), fontSize: 12, flexWrap: "wrap" }}>
-                          <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><MapPin size={12} /> {job.location}</span>
-                          <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Clock3 size={12} /> {job.postedAgo}</span>
-                          <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><Briefcase size={12} /> {job.category}</span>
+                          <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                            <MapPin size={12} /> {isAr ? jobCopy(job.id)?.location ?? job.location : job.location}
+                          </span>
+                          <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                            <Clock3 size={12} /> {isAr ? jobCopy(job.id)?.postedAgo ?? job.postedAgo : job.postedAgo}
+                          </span>
+                          <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                            <Briefcase size={12} /> {isAr ? categoryAr[job.category] ?? job.category : job.category}
+                          </span>
                         </div>
                       </div>
                       {statusBadge(job.status)}
                     </div>
 
-                    <p style={{ margin: "0 0 8px", fontFamily: ff("barlow", lang), color: "rgba(255,255,255,0.78)" }}>{job.description}</p>
-                    <p style={{ margin: "0 0 16px", fontFamily: ff("inter", lang), color: "rgba(255,255,255,0.55)", fontSize: 13 }}>{job.materialsHint}</p>
+                    <p style={{ margin: "0 0 8px", fontFamily: ff("barlow", lang), color: "rgba(255,255,255,0.78)" }}>
+                      {isAr ? jobCopy(job.id)?.description ?? job.description : job.description}
+                    </p>
+                    <p style={{ margin: "0 0 16px", fontFamily: ff("inter", lang), color: "rgba(255,255,255,0.55)", fontSize: 13 }}>
+                      {isAr ? jobCopy(job.id)?.materialsHint ?? job.materialsHint : job.materialsHint}
+                    </p>
 
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-                      <div style={{ color: "#f97316", fontFamily: ff("poppins", lang), fontWeight: 800, fontSize: 14 }}>{job.budget}</div>
+                      <div style={{ color: "#f97316", fontFamily: ff("poppins", lang), fontWeight: 800, fontSize: 14 }}>
+                        {isAr ? jobCopy(job.id)?.budget ?? job.budget : job.budget}
+                      </div>
                     </div>
 
                     <div style={{ display: "flex", gap: 8 }}>
@@ -517,11 +593,18 @@ export default function ProfessionalDashboard() {
               {bids.map((bid) => (
                 <div key={bid.id} style={{ background: "#1a1a1a", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 14, padding: 16 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "center", marginBottom: 10 }}>
-                    <h3 style={{ margin: 0, fontFamily: ff("poppins", lang), fontWeight: 800, fontSize: 16 }}>{bid.jobTitle}</h3>
+                    <h3 style={{ margin: 0, fontFamily: ff("poppins", lang), fontWeight: 800, fontSize: 16 }}>
+                      {isAr ? jobCopy(bid.jobId)?.title ?? bid.jobTitle : bid.jobTitle}
+                    </h3>
                     {statusBadge(bid.status)}
                   </div>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px,1fr))", gap: 8 }}>
-                    <Info icon={<WalletCards size={14} />} label={isAr ? "المبلغ" : "Amount"} value={bid.amount} lang={lang} />
+                    <Info
+                      icon={<WalletCards size={14} />}
+                      label={isAr ? "المبلغ" : "Amount"}
+                      value={isAr ? bid.amount.replace(/^EGP\s/, "ج.م ") : bid.amount}
+                      lang={lang}
+                    />
                     <Info icon={<CalendarDays size={14} />} label={isAr ? "المدة" : "Timeline"} value={bid.timeline} lang={lang} />
                     <Info icon={<MessageSquare size={14} />} label={isAr ? "آخر تحديث" : "Last update"} value={bid.updatedAt} lang={lang} />
                   </div>
@@ -547,8 +630,12 @@ export default function ProfessionalDashboard() {
               )}
               {savedJobs.map((job) => (
                 <div key={job.id} style={{ background: "#1a1a1a", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 14, padding: 16 }}>
-                  <h3 style={{ margin: 0, fontFamily: ff("poppins", lang), fontWeight: 800 }}>{job.title}</h3>
-                  <p style={{ margin: "8px 0 12px", fontFamily: ff("barlow", lang), color: "rgba(255,255,255,0.7)" }}>{job.location} - {job.budget}</p>
+                  <h3 style={{ margin: 0, fontFamily: ff("poppins", lang), fontWeight: 800 }}>
+                    {isAr ? jobCopy(job.id)?.title ?? job.title : job.title}
+                  </h3>
+                  <p style={{ margin: "8px 0 12px", fontFamily: ff("barlow", lang), color: "rgba(255,255,255,0.7)" }}>
+                    {isAr ? jobCopy(job.id)?.location ?? job.location : job.location} - {isAr ? jobCopy(job.id)?.budget ?? job.budget : job.budget}
+                  </p>
                   <button className="btn-primary" style={{ padding: "10px 14px", fontSize: 12 }} onClick={() => openBid(job)}>
                     {text.bidNow}
                   </button>
@@ -583,8 +670,13 @@ export default function ProfessionalDashboard() {
       {activeBidJob && (
         <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.65)", zIndex: 60, display: "grid", placeItems: "center", padding: 18 }}>
           <div style={{ width: "min(560px,100%)", background: "#171717", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: 18 }}>
-            <h3 style={{ margin: "0 0 6px", fontFamily: ff("poppins", lang), fontWeight: 800 }}>{text.bidFormTitle}: {activeBidJob.title}</h3>
-            <p style={{ margin: "0 0 14px", color: "rgba(255,255,255,0.6)", fontFamily: ff("barlow", lang), fontSize: 14 }}>{activeBidJob.location} - {activeBidJob.budget}</p>
+            <h3 style={{ margin: "0 0 6px", fontFamily: ff("poppins", lang), fontWeight: 800 }}>
+              {text.bidFormTitle}: {isAr ? jobCopy(activeBidJob.id)?.title ?? activeBidJob.title : activeBidJob.title}
+            </h3>
+            <p style={{ margin: "0 0 14px", color: "rgba(255,255,255,0.6)", fontFamily: ff("barlow", lang), fontSize: 14 }}>
+              {isAr ? jobCopy(activeBidJob.id)?.location ?? activeBidJob.location : activeBidJob.location} -{" "}
+              {isAr ? jobCopy(activeBidJob.id)?.budget ?? activeBidJob.budget : activeBidJob.budget}
+            </p>
 
             <Label title={text.amount} lang={lang} />
             <input
