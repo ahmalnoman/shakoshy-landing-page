@@ -283,8 +283,8 @@ function Hero() {
               </div>
               <img src={IMG.renovation} alt="Kitchen renovation" style={{ width: "100%", height: 140, objectFit: "cover", borderRadius: 12, marginBottom: 20 }} />
               {[
-                { initial: "A", name: "Ahmed K.", rating: 4.9, jobs: 142, price: "AED 2,400" },
-                { initial: "M", name: "Mohamed S.", rating: 4.7, jobs: 89, price: "AED 2,100" },
+                { initial: "A", name: "Ahmed K.", rating: 4.9, jobs: 142, price: "EGP 24,000" },
+                { initial: "M", name: "Mohamed S.", rating: 4.7, jobs: 89, price: "EGP 21,000" },
               ].map(p => (
                 <div key={p.name} style={{
                   display: "flex", alignItems: "center", justifyContent: "space-between",

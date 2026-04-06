@@ -30,7 +30,7 @@ export const translations = {
   "hero.activeJob": { en: "Active Job", ar: "شغلانة شغالة" },
   "hero.live": { en: "LIVE", ar: "مباشر" },
   "hero.kitchenRenovation": { en: "Kitchen Renovation", ar: "تجديد مطبخ" },
-  "hero.location": { en: "Dubai, UAE", ar: "دبي، الإمارات" },
+  "hero.location": { en: "Cairo, Egypt", ar: "القاهرة، مصر" },
   "hero.postedAgo": { en: "Posted 2h ago", ar: "اتنشر من ساعتين" },
   "hero.rating": { en: "rating", ar: "تقييم" },
   "hero.jobs": { en: "jobs", ar: "شغلانة" },
