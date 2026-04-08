@@ -70,7 +70,7 @@ function JoinProNavbar() {
         <a href="/" onClick={(e) => { e.preventDefault(); navigate("/"); }} style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
           <img src="/shakoshy-icon.png" alt="Shakoshy" style={{ width: 36, height: 36, borderRadius: 8, objectFit: "contain" }} />
           <span style={{ fontWeight: 800, fontSize: 22, color: "white", letterSpacing: "-0.02em" }}>
-            shakoshy
+            {lang === "ar" ? "شاكوشي" : "shakoshy"}
           </span>
         </a>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>

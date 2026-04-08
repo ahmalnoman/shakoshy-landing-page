@@ -120,7 +120,7 @@ function Navbar() {
         <a href="#" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
           <img src="/shakoshy-icon.png" alt="Shakoshy" style={{ width: 36, height: 36, borderRadius: 8, objectFit: "contain" }} />
           <span style={{ fontFamily: ff("poppins", lang), fontWeight: 800, fontSize: 22, color: "white", letterSpacing: "-0.02em" }}>
-            shakoshy
+            {lang === "ar" ? "شاكوشي" : "shakoshy"}
           </span>
         </a>
 
@@ -831,7 +831,7 @@ function Footer() {
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
               <img src="/shakoshy-icon.png" alt="Shakoshy" style={{ width: 36, height: 36, borderRadius: 8, objectFit: "contain" }} />
-              <span style={{ fontFamily: ff("barlow", lang), fontWeight: 800, fontSize: 20, color: "white" }}>shakoshy</span>
+              <span style={{ fontFamily: ff("barlow", lang), fontWeight: 800, fontSize: 20, color: "white" }}>{lang === "ar" ? "شاكوشي" : "shakoshy"}</span>
             </div>
             <p style={{ fontFamily: ff("barlow", lang), fontSize: 14, color: "rgba(255,255,255,0.4)", lineHeight: 1.65, marginBottom: 20, maxWidth: 240 }}>
               {t("footer.desc")}
