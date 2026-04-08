@@ -329,18 +329,18 @@ export default function ProfessionalDashboard() {
     <div style={{ minHeight: "100vh", background: "#0f0f0f", color: "white" }}>
       <section style={{ borderBottom: "1px solid rgba(255,255,255,0.08)", background: "linear-gradient(180deg, #161616, #0f0f0f)" }}>
         <div className="container" style={{ paddingTop: 34, paddingBottom: 28 }}>
-          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
-            <div>
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+            <div style={{ minWidth: 0, flex: 1 }}>
               <p className="section-label" style={{ marginBottom: 10, fontFamily: ff("poppins", lang) }}>{text.pageBadge}</p>
-              <h1 style={{ fontFamily: ff("poppins", lang), fontWeight: 900, fontSize: "clamp(1.8rem, 3.5vw, 2.7rem)", marginBottom: 8 }}>
+              <h1 style={{ fontFamily: ff("poppins", lang), fontWeight: 900, fontSize: "clamp(1.5rem, 3.5vw, 2.7rem)", marginBottom: 8 }}>
                 {text.pageTitle}
               </h1>
-              <p style={{ fontFamily: ff("barlow", lang), color: "rgba(255,255,255,0.62)", fontSize: 16, maxWidth: 780 }}>
+              <p style={{ fontFamily: ff("barlow", lang), color: "rgba(255,255,255,0.62)", fontSize: 15, maxWidth: 780 }}>
                 {text.pageDesc}
               </p>
             </div>
 
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
               <button
                 onClick={toggleLang}
                 title={lang === "en" ? "التبديل إلى العربية" : "Switch to English"}
@@ -416,7 +416,7 @@ export default function ProfessionalDashboard() {
                     position: "absolute",
                     top: 58,
                     ...(isAr ? { left: 0 } : { right: 0 }),
-                    width: 340,
+                    width: "min(340px, calc(100vw - 32px))",
                     zIndex: 40,
                     background: "#1a1a1a",
                     border: "1px solid rgba(255,255,255,0.1)",
@@ -450,7 +450,7 @@ export default function ProfessionalDashboard() {
             </div>
           </div>
 
-          <div style={{ display: "flex", gap: 8, marginTop: 22, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 8, marginTop: 22, overflowX: "auto", flexWrap: "nowrap", paddingBottom: 4, scrollbarWidth: "none" }}>
             {[
               { id: "jobs", label: text.tabs.jobs, icon: <Briefcase size={15} /> },
               { id: "bids", label: text.tabs.bids, icon: <WalletCards size={15} /> },
@@ -470,10 +470,12 @@ export default function ProfessionalDashboard() {
                     border: selected ? "1px solid rgba(249,115,22,0.45)" : "1px solid rgba(255,255,255,0.12)",
                     background: selected ? "rgba(249,115,22,0.16)" : "rgba(255,255,255,0.04)",
                     color: selected ? "#f97316" : "rgba(255,255,255,0.78)",
-                    padding: "10px 14px",
+                    padding: "10px 16px",
                     fontFamily: ff("poppins", lang),
                     fontWeight: 700,
-                    fontSize: 12,
+                    fontSize: 13,
+                    flexShrink: 0,
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {tab.icon}
@@ -561,7 +563,7 @@ export default function ProfessionalDashboard() {
                       <button
                         onClick={() => openBid(job)}
                         className="btn-primary"
-                        style={{ padding: "10px 16px", fontSize: 12, letterSpacing: "0.06em" }}
+                        style={{ flex: 1, padding: "12px 16px", fontSize: 14, letterSpacing: "0.04em" }}
                         disabled={job.status === "Hired"}
                       >
                         {text.bidNow}
@@ -573,10 +575,12 @@ export default function ProfessionalDashboard() {
                           border: "1px solid rgba(255,255,255,0.15)",
                           background: job.saved ? "rgba(249,115,22,0.18)" : "rgba(255,255,255,0.05)",
                           color: job.saved ? "#f97316" : "rgba(255,255,255,0.75)",
-                          padding: "0 14px",
+                          padding: "12px 16px",
                           fontFamily: ff("poppins", lang),
                           fontWeight: 700,
-                          fontSize: 12,
+                          fontSize: 14,
+                          flexShrink: 0,
+                          cursor: "pointer",
                         }}
                       >
                         {job.saved ? text.saved : text.save}
@@ -636,7 +640,7 @@ export default function ProfessionalDashboard() {
                   <p style={{ margin: "8px 0 12px", fontFamily: ff("barlow", lang), color: "rgba(255,255,255,0.7)" }}>
                     {isAr ? jobCopy(job.id)?.location ?? job.location : job.location} - {isAr ? jobCopy(job.id)?.budget ?? job.budget : job.budget}
                   </p>
-                  <button className="btn-primary" style={{ padding: "10px 14px", fontSize: 12 }} onClick={() => openBid(job)}>
+                  <button className="btn-primary" style={{ padding: "12px 20px", fontSize: 14 }} onClick={() => openBid(job)}>
                     {text.bidNow}
                   </button>
                 </div>
@@ -668,8 +672,8 @@ export default function ProfessionalDashboard() {
       </section>
 
       {activeBidJob && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.65)", zIndex: 60, display: "grid", placeItems: "center", padding: 18 }}>
-          <div style={{ width: "min(560px,100%)", background: "#171717", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: 18 }}>
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.65)", zIndex: 60, display: "flex", alignItems: "flex-end", justifyContent: "center", padding: "0 0 0 0" }} className="sm:items-center sm:p-4">
+          <div style={{ width: "min(560px,100%)", background: "#171717", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "16px 16px 0 0", padding: 20, maxHeight: "90vh", overflowY: "auto" }} className="sm:rounded-2xl">
             <h3 style={{ margin: "0 0 6px", fontFamily: ff("poppins", lang), fontWeight: 800 }}>
               {text.bidFormTitle}: {isAr ? jobCopy(activeBidJob.id)?.title ?? activeBidJob.title : activeBidJob.title}
             </h3>
@@ -700,23 +704,25 @@ export default function ProfessionalDashboard() {
             <Label title={text.message} lang={lang} />
             <textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={3} style={inputStyle(lang)} />
 
-            <div style={{ display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 14 }}>
+            <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
               <button
                 onClick={() => setActiveBidJob(null)}
                 style={{
-                  borderRadius: 8,
+                  flex: 1,
+                  borderRadius: 10,
                   border: "1px solid rgba(255,255,255,0.16)",
                   background: "rgba(255,255,255,0.04)",
                   color: "white",
-                  padding: "10px 14px",
+                  padding: "13px 16px",
                   fontFamily: ff("poppins", lang),
                   fontWeight: 700,
-                  fontSize: 12,
+                  fontSize: 14,
+                  cursor: "pointer",
                 }}
               >
                 {text.cancel}
               </button>
-              <button className="btn-primary" style={{ padding: "10px 14px", fontSize: 12 }} onClick={submitBid}>
+              <button className="btn-primary" style={{ flex: 2, padding: "13px 16px", fontSize: 14 }} onClick={submitBid}>
                 {text.submitBid}
               </button>
             </div>

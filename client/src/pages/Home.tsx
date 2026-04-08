@@ -164,7 +164,7 @@ function Navbar() {
           {/* Unique pro login CTA */}
           <a
             href="/professional/dashboard"
-            className="inline-flex"
+            className="hidden lg:inline-flex"
             style={{
               position: "relative",
               alignItems: "center",
