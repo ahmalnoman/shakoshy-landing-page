@@ -105,7 +105,7 @@ const jobArCopy: Record<
 
 function ff(base: "poppins" | "barlow" | "inter", lang: "en" | "ar") {
   const fonts = { poppins: "'Poppins'", barlow: "'Barlow'", inter: "'Inter'" };
-  return lang === "ar" ? `'Noto Sans Arabic', ${fonts[base]}, sans-serif` : `${fonts[base]}, sans-serif`;
+  return lang === "ar" ? `'Noto Naskh Arabic', ${fonts[base]}, sans-serif` : `${fonts[base]}, sans-serif`;
 }
 
 const initialJobs: Job[] = [

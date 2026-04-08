@@ -28,7 +28,7 @@ const IMG = {
 // ── Font helper (switches to Arabic font when RTL) ──────────
 function ff(base: "poppins" | "barlow" | "inter", lang: "en" | "ar") {
   const fonts = { poppins: "'Poppins'", barlow: "'Barlow'", inter: "'Inter'" };
-  return lang === "ar" ? `'Noto Sans Arabic', ${fonts[base]}, sans-serif` : `${fonts[base]}, sans-serif`;
+  return lang === "ar" ? `'Noto Naskh Arabic', ${fonts[base]}, sans-serif` : `${fonts[base]}, sans-serif`;
 }
 
 // ── Intersection Observer hook ───────────────────────────────
@@ -150,7 +150,7 @@ function Navbar() {
               background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
               borderRadius: 8, padding: "6px 12px",
               color: "rgba(255,255,255,0.8)", cursor: "pointer",
-              fontFamily: lang === "ar" ? "'Poppins', sans-serif" : "'Noto Sans Arabic', sans-serif",
+              fontFamily: lang === "ar" ? "'Poppins', sans-serif" : "'Noto Naskh Arabic', sans-serif",
               fontWeight: 600, fontSize: 13,
               transition: "background 0.2s, border-color 0.2s",
             }}
