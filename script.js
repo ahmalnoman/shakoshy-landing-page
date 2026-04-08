@@ -115,4 +115,105 @@ document.addEventListener('DOMContentLoaded', function () {
   navStyle.textContent = '.nav-links a.active { color: var(--primary) !important; background: rgba(249,115,22,0.08) !important; }';
   document.head.appendChild(navStyle);
 
+  // ---- Professional Login Modal ----
+  var proModal = document.getElementById('proModal');
+  var proModalCard = proModal.querySelector('.pro-modal-card');
+  var proModalClose = document.getElementById('proModalClose');
+  var proModalLang = document.getElementById('proModalLang');
+  var proViewLogin = document.getElementById('proViewLogin');
+  var proViewSignup = document.getElementById('proViewSignup');
+  var goToSignup = document.getElementById('goToSignup');
+  var goToLogin = document.getElementById('goToLogin');
+  var proLoginSubmit = document.getElementById('proLoginSubmit');
+  var proSignupSubmit = document.getElementById('proSignupSubmit');
+  var proLoginForm = document.getElementById('proLoginForm');
+  var proSignupForm = document.getElementById('proSignupForm');
+  var proLoginSuccess = document.getElementById('proLoginSuccess');
+  var proSignupSuccess = document.getElementById('proSignupSuccess');
+
+  var isArabic = false;
+
+  function openModal() {
+    proModal.classList.add('open');
+    proModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    showView('login');
+    resetForms();
+  }
+
+  function closeModal() {
+    proModal.classList.remove('open');
+    proModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  function showView(view) {
+    if (view === 'login') {
+      proViewLogin.style.display = '';
+      proViewSignup.style.display = 'none';
+    } else {
+      proViewLogin.style.display = 'none';
+      proViewSignup.style.display = '';
+    }
+  }
+
+  function resetForms() {
+    proLoginForm.style.display = '';
+    proSignupForm.style.display = '';
+    proLoginSuccess.style.display = 'none';
+    proSignupSuccess.style.display = 'none';
+    document.getElementById('loginEmail').value = '';
+    document.getElementById('loginPassword').value = '';
+    document.getElementById('signupName').value = '';
+    document.getElementById('signupEmail').value = '';
+    document.getElementById('signupPhone').value = '';
+    document.getElementById('signupPassword').value = '';
+  }
+
+  function applyLang() {
+    var attr = isArabic ? 'data-ar' : 'data-en';
+    proModal.querySelectorAll('[data-en]').forEach(function (el) {
+      el.textContent = el.getAttribute(attr);
+    });
+    proModalCard.classList.toggle('rtl', isArabic);
+    proModalLang.textContent = isArabic ? 'English' : 'العربية';
+  }
+
+  var btn1 = document.getElementById('joinProfBtn1');
+  var btn2 = document.getElementById('joinProfBtn2');
+  if (btn1) {
+    btn1.addEventListener('click', function (e) { e.preventDefault(); openModal(); });
+  }
+  if (btn2) {
+    btn2.addEventListener('click', function (e) { e.preventDefault(); openModal(); });
+  }
+
+  proModalClose.addEventListener('click', closeModal);
+  proModal.addEventListener('click', function (e) {
+    if (e.target === proModal) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  goToSignup.addEventListener('click', function (e) { e.preventDefault(); showView('signup'); });
+  goToLogin.addEventListener('click', function (e) { e.preventDefault(); showView('login'); });
+
+  proModalLang.addEventListener('click', function () {
+    isArabic = !isArabic;
+    applyLang();
+  });
+
+  proLoginSubmit.addEventListener('click', function () {
+    proLoginForm.style.display = 'none';
+    proLoginSuccess.style.display = '';
+    setTimeout(closeModal, 2500);
+  });
+
+  proSignupSubmit.addEventListener('click', function () {
+    proSignupForm.style.display = 'none';
+    proSignupSuccess.style.display = '';
+    setTimeout(closeModal, 2500);
+  });
+
 });
