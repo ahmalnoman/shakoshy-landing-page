@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000
+    },
+    {
+      "name": "shakoshy-landing",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-l", "5500", "."],
+      "port": 5500
     }
   ]
 }
