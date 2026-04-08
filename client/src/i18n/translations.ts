@@ -583,6 +583,23 @@ export const translations = {
   "catPage.ctaDesc": { en: "Join Shakoshy and start receiving job requests from clients in your area.", ar: "انضم لشكوشي وابدأ تستقبل طلبات شغل من عملاء في منطقتك." },
   "catPage.ctaButton": { en: "Join as Professional", ar: "انضم كمحترف" },
   "catPage.backToHome": { en: "Back to Home", ar: "ارجع للرئيسية" },
+
+  // Professional login modal
+  "modal.login.title":      { en: "Login", ar: "تسجيل الدخول" },
+  "modal.login.emailPhone": { en: "Email or Phone", ar: "البريد الإلكتروني أو الهاتف" },
+  "modal.login.password":   { en: "Password", ar: "كلمة المرور" },
+  "modal.login.submit":     { en: "Login", ar: "تسجيل الدخول" },
+  "modal.login.success":    { en: "Welcome back!", ar: "مرحباً بعودتك!" },
+  "modal.login.noAccount":  { en: "Don't have an account?", ar: "ليس لديك حساب؟" },
+  "modal.login.signupLink": { en: "Sign up as a worker", ar: "سجّل كعامل" },
+  "modal.signup.title":     { en: "Sign up as a worker", ar: "سجّل كعامل" },
+  "modal.signup.fullName":  { en: "Full Name", ar: "الاسم الكامل" },
+  "modal.signup.email":     { en: "Email", ar: "البريد الإلكتروني" },
+  "modal.signup.phone":     { en: "Phone", ar: "رقم الهاتف" },
+  "modal.signup.submit":    { en: "Create Account", ar: "إنشاء حساب" },
+  "modal.signup.success":   { en: "Account created! We'll be in touch.", ar: "تم إنشاء حسابك! سنتواصل معك قريباً." },
+  "modal.signup.hasAccount":{ en: "Already have an account?", ar: "لديك حساب بالفعل؟" },
+  "modal.signup.loginLink": { en: "Login", ar: "تسجيل الدخول" },
 } as const;
 
 export type TranslationKey = keyof typeof translations;

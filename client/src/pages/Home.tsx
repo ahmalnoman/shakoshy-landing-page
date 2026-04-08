@@ -281,7 +281,7 @@ function Navbar() {
 // ══════════════════════════════════════════════════════════════
 // HERO
 // ══════════════════════════════════════════════════════════════
-function Hero() {
+function Hero({ onOpenModal }: { onOpenModal: () => void }) {
   const { lang, t } = useLang();
   return (
     <section style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", overflow: "hidden", background: "#111" }}>
@@ -332,9 +332,9 @@ function Hero() {
               <a href="/post-job" className="btn-primary" style={{ fontSize: 14, padding: "14px 28px", fontFamily: ff("poppins", lang) }}>
                 {t("hero.postAJob")} <ArrowRight size={16} style={{ transform: lang === "ar" ? "scaleX(-1)" : "none" }} />
               </a>
-              <a href="/join-professional" className="btn-outline-white" style={{ fontSize: 14, padding: "14px 28px", fontFamily: ff("poppins", lang) }}>
+              <button onClick={onOpenModal} className="btn-outline-white" style={{ fontSize: 14, padding: "14px 28px", fontFamily: ff("poppins", lang), cursor: "pointer" }}>
                 {t("hero.joinProfessional")}
-              </a>
+              </button>
             </div>
 
             <div style={{ display: "flex", gap: 28, flexWrap: "wrap" }}>
@@ -779,7 +779,7 @@ function AppSection() {
 // ══════════════════════════════════════════════════════════════
 // CTA
 // ══════════════════════════════════════════════════════════════
-function CTASection() {
+function CTASection({ onOpenModal }: { onOpenModal: () => void }) {
   const { lang, t } = useLang();
   return (
     <section id="post-job" style={{ position: "relative", overflow: "hidden", background: "#111", paddingTop: "6rem", paddingBottom: "6rem" }}>
@@ -803,9 +803,9 @@ function CTASection() {
             <a href="#" className="btn-primary" style={{ fontSize: 15, padding: "16px 36px", fontFamily: ff("poppins", lang) }}>
               {t("cta.postAJob")} <ArrowRight size={17} style={{ transform: lang === "ar" ? "scaleX(-1)" : "none" }} />
             </a>
-            <a href="/join-professional" className="btn-outline-white" style={{ fontSize: 15, padding: "16px 36px", fontFamily: ff("poppins", lang) }}>
+            <button onClick={onOpenModal} className="btn-outline-white" style={{ fontSize: 15, padding: "16px 36px", fontFamily: ff("poppins", lang), cursor: "pointer" }}>
               {t("cta.joinProfessional")}
-            </a>
+            </button>
           </div>
         </FadeUp>
       </div>
@@ -897,21 +897,162 @@ function Footer() {
 }
 
 // ══════════════════════════════════════════════════════════════
+// PROFESSIONAL LOGIN MODAL
+// ══════════════════════════════════════════════════════════════
+function ProfessionalLoginModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const { lang, t } = useLang();
+  const [view, setView] = useState<"login" | "signup">("login");
+  const [submitted, setSubmitted] = useState(false);
+  const isRTL = lang === "ar";
+  const fontFamily = isRTL ? "'Noto Naskh Arabic', sans-serif" : "'Inter', sans-serif";
+
+  useEffect(() => {
+    if (isOpen) {
+      setView("login");
+      setSubmitted(false);
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [isOpen]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  function handleSubmit() {
+    setSubmitted(true);
+    setTimeout(onClose, 2500);
+  }
+
+  if (!isOpen) return null;
+
+  const inputStyle: React.CSSProperties = {
+    width: "100%", background: "#2D2D2D", border: "1.5px solid #3D3D3D",
+    borderRadius: 12, color: "white", fontFamily, fontSize: 15,
+    padding: "12px 14px", outline: "none", boxSizing: "border-box",
+  };
+  const labelStyle: React.CSSProperties = {
+    display: "block", color: "#9CA3AF", fontSize: 12, fontWeight: 600,
+    textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6, fontFamily,
+  };
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: "fixed", inset: 0, background: "rgba(0,0,0,0.72)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        zIndex: 9000, padding: 16,
+      }}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          background: "#1A1A1A", borderRadius: 20, width: "100%", maxWidth: 440,
+          padding: 32, boxShadow: "0 10px 40px rgba(0,0,0,0.4)",
+          direction: isRTL ? "rtl" : "ltr", fontFamily,
+        }}
+      >
+        {/* Header */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
+          <div style={{ width: 44, height: 44, background: "#F97316", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <button
+            onClick={onClose}
+            style={{ marginInlineStart: "auto", background: "none", border: "none", color: "#9CA3AF", fontSize: 20, cursor: "pointer", lineHeight: 1, padding: 4 }}
+          >✕</button>
+        </div>
+
+        {/* Title */}
+        <h2 style={{ color: "white", fontSize: 22, fontWeight: 800, marginBottom: 24, fontFamily }}>
+          {view === "login" ? t("modal.login.title") : t("modal.signup.title")}
+        </h2>
+
+        {submitted ? (
+          <div style={{ textAlign: "center", padding: "24px 0 8px" }}>
+            <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 56, height: 56, background: "rgba(249,115,22,0.15)", color: "#F97316", borderRadius: "50%", fontSize: 26, marginBottom: 16 }}>✓</div>
+            <p style={{ color: "white", fontSize: 17, fontWeight: 600, fontFamily }}>
+              {view === "login" ? t("modal.login.success") : t("modal.signup.success")}
+            </p>
+          </div>
+        ) : (
+          <>
+            {view === "login" ? (
+              <>
+                <div style={{ marginBottom: 16 }}>
+                  <label style={labelStyle}>{t("modal.login.emailPhone")}</label>
+                  <input type="text" style={inputStyle} autoComplete="username" />
+                </div>
+                <div style={{ marginBottom: 16 }}>
+                  <label style={labelStyle}>{t("modal.login.password")}</label>
+                  <input type="password" style={inputStyle} autoComplete="current-password" />
+                </div>
+                <button onClick={handleSubmit} style={{ width: "100%", background: "#F97316", color: "white", border: "none", borderRadius: 12, padding: "14px", fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily, marginTop: 8, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                  {t("modal.login.submit")}
+                </button>
+                <p style={{ marginTop: 20, textAlign: "center", fontSize: 14, color: "#9CA3AF", fontFamily }}>
+                  {t("modal.login.noAccount")}{" "}
+                  <a href="#" onClick={e => { e.preventDefault(); setSubmitted(false); setView("signup"); }} style={{ color: "#F97316", fontWeight: 600 }}>
+                    {t("modal.login.signupLink")}
+                  </a>
+                </p>
+              </>
+            ) : (
+              <>
+                {[
+                  { label: t("modal.signup.fullName"), type: "text", auto: "name" },
+                  { label: t("modal.signup.email"), type: "email", auto: "email" },
+                  { label: t("modal.signup.phone"), type: "tel", auto: "tel" },
+                  { label: t("modal.login.password"), type: "password", auto: "new-password" },
+                ].map(f => (
+                  <div key={f.label} style={{ marginBottom: 16 }}>
+                    <label style={labelStyle}>{f.label}</label>
+                    <input type={f.type} style={inputStyle} autoComplete={f.auto} />
+                  </div>
+                ))}
+                <button onClick={handleSubmit} style={{ width: "100%", background: "#F97316", color: "white", border: "none", borderRadius: 12, padding: "14px", fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily, marginTop: 8, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                  {t("modal.signup.submit")}
+                </button>
+                <p style={{ marginTop: 20, textAlign: "center", fontSize: 14, color: "#9CA3AF", fontFamily }}>
+                  {t("modal.signup.hasAccount")}{" "}
+                  <a href="#" onClick={e => { e.preventDefault(); setSubmitted(false); setView("login"); }} style={{ color: "#F97316", fontWeight: 600 }}>
+                    {t("modal.signup.loginLink")}
+                  </a>
+                </p>
+              </>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════
 // PAGE
 // ══════════════════════════════════════════════════════════════
 export default function Home() {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <div style={{ overflowX: "hidden" }}>
       <Navbar />
-      <Hero />
+      <Hero onOpenModal={() => setModalOpen(true)} />
       <StatsBar />
       <ProblemSection />
       <HowItWorks />
       <Categories />
       <TrustSection />
       <AppSection />
-      <CTASection />
+      <CTASection onOpenModal={() => setModalOpen(true)} />
       <Footer />
+      <ProfessionalLoginModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
     </div>
   );
 }
