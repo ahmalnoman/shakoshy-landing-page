@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shakoshy &mdash; Coming Soon</title>
+  <meta name="description" content="Shakoshy is launching soon — the trusted home services & construction ecosystem for the Middle East & Africa. Counting down to June 1, 2026." />
+  <meta name="theme-color" content="#0b0b0c" />
+  <link rel="icon" type="image/png" href="shakoshy-icon.png" />
+
+  <!-- Social / link previews -->
+  <meta property="og:title" content="Shakoshy — Coming Soon" />
+  <meta property="og:description" content="The home services & construction ecosystem for the Middle East & Africa. Launching June 1, 2026." />
+  <meta property="og:image" content="https://shakoshy.com/shakoshy-og.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://shakoshy.com" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Shakoshy — Coming Soon" />
+  <meta name="twitter:description" content="The home services & construction ecosystem for the Middle East & Africa. Launching June 1, 2026." />
+  <meta name="twitter:image" content="https://shakoshy.com/shakoshy-og.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       SHAKOSHY — Coming Soon  ·  "Forge Glow"
+       ============================================================ */
+    :root {
+      --bg:           #0b0b0c;
+      --ink:          #f6f4f1;
+      --muted:        rgba(246, 244, 241, 0.60);
+      --faint:        rgba(246, 244, 241, 0.38);
+      --ember:        #F97316;
+      --ember-bright: #FB923C;
+      --glass:        rgba(255, 255, 255, 0.045);
+      --glass-line:   rgba(255, 255, 255, 0.10);
+      --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+      --font-body:    'Barlow', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    [hidden] { display: none !important; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      background:
+        radial-gradient(120vw 90vh at 50% -12%, #16110c 0%, var(--bg) 58%);
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    ::selection { background: var(--ember); color: #0b0b0c; }
+
+    /* ===== BACKGROUND LAYERS ===== */
+    .glow {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(58vw 52vh at 50% 32%, rgba(249, 115, 22, 0.22), transparent 62%),
+        radial-gradient(26vw 24vh at 50% 27%, rgba(251, 146, 60, 0.30), transparent 64%);
+      animation: breathe 7s ease-in-out infinite;
+    }
+    @keyframes breathe {
+      0%, 100% { opacity: 0.78; transform: scale(1); }
+      50%      { opacity: 1;    transform: scale(1.06); }
+    }
+
+    body::after { /* vignette */
+      content: ""; position: fixed; inset: 0; z-index: 2; pointer-events: none;
+      background: radial-gradient(130vw 100vh at 50% 38%, transparent 48%, rgba(0, 0, 0, 0.74));
+    }
+
+    .embers { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+    .ember {
+      position: fixed; bottom: -14px;
+      width: var(--s); height: var(--s);
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--ember-bright) 0%, rgba(249, 115, 22, 0.15) 70%, transparent 100%);
+      opacity: 0;
+      animation: rise var(--d) linear var(--delay) infinite;
+      will-change: transform, opacity;
+    }
+    @keyframes rise {
+      0%   { transform: translate3d(0, 0, 0) scale(0.5);                opacity: 0; }
+      12%  { opacity: 0.7; }
+      80%  { opacity: 0.45; }
+      100% { transform: translate3d(var(--drift), -110vh, 0) scale(1);  opacity: 0; }
+    }
+
+    .grain {
+      position: fixed; inset: 0; z-index: 4; pointer-events: none;
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ===== LAYOUT ===== */
+    .wrap {
+      position: relative; z-index: 3;
+      flex: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: clamp(1.05rem, 2.8vw, 1.85rem);
+      text-align: center;
+      padding: clamp(2.6rem, 8vh, 5rem) 1.4rem 1.6rem;
+    }
+    .wrap > * { animation: fadeUp 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+    .wrap > *:nth-child(1) { animation-delay: 0.08s; }
+    .wrap > *:nth-child(2) { animation-delay: 0.18s; }
+    .wrap > *:nth-child(3) { animation-delay: 0.30s; }
+    .wrap > *:nth-child(4) { animation-delay: 0.42s; }
+    .wrap > *:nth-child(5) { animation-delay: 0.56s; }
+    .wrap > *:nth-child(6) { animation-delay: 0.56s; }
+    .wrap > *:nth-child(7) { animation-delay: 0.68s; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== BRAND ===== */
+    .brand {
+      display: flex; align-items: center; gap: 0.7rem;
+      text-decoration: none; color: inherit;
+    }
+    .brand-logo {
+      width: 46px; height: 46px;
+      border-radius: 13px; overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06),
+                  0 10px 44px rgba(249, 115, 22, 0.55);
+    }
+    .brand-logo img { width: 100%; height: 100%; display: block; }
+    .brand-name {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.6rem;
+      letter-spacing: -0.012em;
+      color: var(--ink);
+    }
+
+    /* ===== EYEBROW ===== */
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.74rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--ember-bright);
+      padding: 0.5rem 1.05rem 0.5rem 0.9rem;
+      border: 1px solid rgba(249, 115, 22, 0.24);
+      border-radius: 999px;
+      background: rgba(249, 115, 22, 0.07);
+    }
+    .dot {
+      position: relative;
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--ember);
+      flex-shrink: 0;
+    }
+    .dot::after {
+      content: ""; position: absolute; inset: -4px;
+      border-radius: 50%; border: 1px solid var(--ember);
+      animation: ping 2.6s ease-out infinite;
+    }
+    @keyframes ping {
+      0%   { transform: scale(0.6); opacity: 0.9; }
+      100% { transform: scale(2);   opacity: 0; }
+    }
+
+    /* ===== HEADLINE ===== */
+    .headline {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(2.7rem, 7.4vw, 5.2rem);
+      line-height: 0.98;
+      letter-spacing: -0.005em;
+      color: var(--ink);
+    }
+    .headline em { font-style: normal; color: var(--ember); }
+
+    .sub {
+      max-width: 44ch;
+      font-weight: 400;
+      font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+      line-height: 1.62;
+      color: var(--muted);
+    }
+
+    /* ===== COUNTDOWN ===== */
+    .countdown {
+      display: flex;
+      gap: clamp(0.6rem, 1.6vw, 1.05rem);
+      margin-top: 0.3rem;
+    }
+    .unit {
+      position: relative;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0.4rem;
+      width: clamp(82px, 19vw, 132px);
+      padding: clamp(1rem, 2.4vw, 1.55rem) 0.5rem clamp(0.85rem, 2vw, 1.2rem);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018));
+      border: 1px solid var(--glass-line);
+      border-radius: 18px;
+      overflow: hidden;
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 24px 50px -26px rgba(0, 0, 0, 0.8),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+    .unit::before { /* lit top edge */
+      content: ""; position: absolute; top: 0; left: 16%; right: 16%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.75), transparent);
+    }
+    .num {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.9rem, 9vw, 5.4rem);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      color: var(--ink);
+      text-shadow: 0 0 28px rgba(249, 115, 22, 0.5);
+    }
+    .num.tick { animation: tick 0.4s cubic-bezier(0.2, 0.7, 0.2, 1); }
+    @keyframes tick {
+      0%   { transform: translateY(-0.07em); opacity: 0.55; }
+      100% { transform: translateY(0);       opacity: 1; }
+    }
+    .lab {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+
+    /* ===== LAUNCH DATE + LIVE STATE ===== */
+    .launch-date {
+      font-weight: 500;
+      font-size: 0.74rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+    .live h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      line-height: 1;
+      color: var(--ink);
+    }
+    .live p { margin-top: 0.5rem; color: var(--ember-bright); font-size: 1.05rem; }
+
+    /* ===== FOOTER ===== */
+    .foot {
+      position: relative; z-index: 3;
+      padding: 1.5rem 1.4rem 1.7rem;
+      text-align: center;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      color: var(--faint);
+      animation: fadeUp 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.8s both;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 540px) {
+      .countdown {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.6rem;
+      }
+      .unit { width: 100%; }
+    }
+
+    /* ===== REDUCED MOTION ===== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+      .glow { opacity: 0.92; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow" aria-hidden="true"></div>
+  <div class="embers" id="embers" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <a class="brand" href="/" aria-label="Shakoshy">
+      <span class="brand-logo"><img src="shakoshy-icon.png" alt="" width="46" height="46" /></span>
+      <span class="brand-name">shakoshy</span>
+    </a>
+
+    <div class="eyebrow"><span class="dot" aria-hidden="true"></span>Launching Soon</div>
+
+    <h1 class="headline">Something <em>powerful</em><br />is on the way.</h1>
+
+    <p class="sub">Shakoshy is building the home services &amp; construction ecosystem for the Middle East &amp; Africa. We&rsquo;re putting the final pieces in place.</p>
+
+    <div class="countdown" id="countdown" role="timer" aria-label="Time remaining until launch on June 1, 2026">
+      <div class="unit"><span class="num" id="days">00</span><span class="lab">Days</span></div>
+      <div class="unit"><span class="num" id="hours">00</span><span class="lab">Hours</span></div>
+      <div class="unit"><span class="num" id="minutes">00</span><span class="lab">Minutes</span></div>
+      <div class="unit"><span class="num" id="seconds">00</span><span class="lab">Seconds</span></div>
+    </div>
+
+    <div class="live" id="live" hidden>
+      <h2>The wait is over.</h2>
+      <p>Shakoshy is now live.</p>
+    </div>
+
+    <p class="launch-date" id="launchDate">June 1, 2026</p>
+  </main>
+
+  <footer class="foot">&copy; 2026 Shakoshy &middot; Middle East &amp; Africa</footer>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      // Launch target: June 1, 2026, 00:00 Gulf Standard Time (UTC+4).
+      var LAUNCH = new Date("2026-06-01T00:00:00+04:00").getTime();
+
+      var els = {
+        days:    document.getElementById("days"),
+        hours:   document.getElementById("hours"),
+        minutes: document.getElementById("minutes"),
+        seconds: document.getElementById("seconds")
+      };
+      var countdown  = document.getElementById("countdown");
+      var launchDate = document.getElementById("launchDate");
+      var live       = document.getElementById("live");
+
+      function pad(n) { return (n < 10 ? "0" : "") + n; }
+
+      function setVal(key, value) {
+        var el = els[key];
+        var str = pad(value);
+        if (el.textContent !== str) {
+          el.textContent = str;
+          el.classList.remove("tick");
+          void el.offsetWidth; // restart the animation
+          el.classList.add("tick");
+        }
+      }
+
+      var timer = setInterval(render, 1000);
+
+      function render() {
+        var diff = LAUNCH - Date.now();
+
+        if (diff <= 0) {
+          clearInterval(timer);
+          countdown.hidden = true;
+          launchDate.hidden = true;
+          live.hidden = false;
+          return;
+        }
+
+        setVal("days",    Math.floor(diff / 86400000));
+        setVal("hours",   Math.floor((diff % 86400000) / 3600000));
+        setVal("minutes", Math.floor((diff % 3600000) / 60000));
+        setVal("seconds", Math.floor((diff % 60000) / 1000));
+      }
+
+      render();
+
+      // Drifting embers — skipped when the visitor prefers reduced motion.
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        var box = document.getElementById("embers");
+        for (var i = 0; i < 16; i++) {
+          var e = document.createElement("span");
+          e.className = "ember";
+          e.style.left = (Math.random() * 100).toFixed(2) + "%";
+          e.style.setProperty("--s", (2 + Math.random() * 4).toFixed(1) + "px");
+          e.style.setProperty("--d", (9 + Math.random() * 12).toFixed(1) + "s");
+          e.style.setProperty("--delay", (-Math.random() * 18).toFixed(1) + "s");
+          e.style.setProperty("--drift", (Math.random() * 64 - 32).toFixed(0) + "px");
+          box.appendChild(e);
+        }
+      }
+    })();
+  </script>
+
+</body>
+</html>
