@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy &mdash; Shakoshy</title>
+  <meta name="description" content="Privacy policy for the Shakoshy mobile app — what we collect, how we use it, and your rights." />
+  <meta name="theme-color" content="#0b0b0c" />
+  <link rel="icon" type="image/png" href="shakoshy-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:           #0b0b0c;
+      --ink:          #f6f4f1;
+      --muted:        rgba(246, 244, 241, 0.65);
+      --faint:        rgba(246, 244, 241, 0.40);
+      --ember:        #F97316;
+      --ember-bright: #FB923C;
+      --glass:        rgba(255, 255, 255, 0.045);
+      --glass-line:   rgba(255, 255, 255, 0.10);
+      --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+      --font-body:    'Barlow', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-arabic:  'Cairo', 'Tahoma', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      background:
+        radial-gradient(120vw 90vh at 50% -12%, #16110c 0%, var(--bg) 58%);
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      padding: 48px 24px 96px;
+    }
+
+    .container { max-width: 1280px; margin: 0 auto; }
+
+    header.top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--glass-line);
+      margin-bottom: 48px;
+    }
+    header.top a.brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink);
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 22px;
+    }
+    header.top a.brand img { width: 32px; height: 32px; border-radius: 6px; }
+    header.top .updated {
+      color: var(--faint);
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    h1.page-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 56px);
+      letter-spacing: 0.02em;
+      line-height: 1.05;
+      margin-bottom: 8px;
+    }
+    h1.page-title .ar {
+      display: block;
+      font-family: var(--font-arabic);
+      font-weight: 700;
+      direction: rtl;
+      color: var(--ember-bright);
+      font-size: 0.7em;
+      margin-top: 6px;
+    }
+    p.intro {
+      color: var(--muted);
+      max-width: 720px;
+      margin-bottom: 48px;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+    @media (max-width: 880px) {
+      .columns { grid-template-columns: 1fr; gap: 32px; }
+    }
+
+    section.col {
+      background: var(--glass);
+      border: 1px solid var(--glass-line);
+      border-radius: 14px;
+      padding: 32px 28px;
+    }
+    section.col.ar { direction: rtl; font-family: var(--font-arabic); }
+    section.col.ar h2, section.col.ar h3 { font-family: var(--font-arabic); }
+
+    section.col h2 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ember-bright);
+      font-size: 13px;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--glass-line);
+    }
+    section.col h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 0.02em;
+      margin: 28px 0 10px;
+      color: var(--ink);
+    }
+    section.col h3:first-of-type { margin-top: 0; }
+    section.col p, section.col li {
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+    section.col ul { padding-inline-start: 20px; margin-bottom: 8px; }
+    section.col li { margin-bottom: 6px; }
+    section.col a { color: var(--ember-bright); text-decoration: none; }
+    section.col a:hover { text-decoration: underline; }
+    section.col strong { color: var(--ink); font-weight: 600; }
+
+    .footer-meta {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--glass-line);
+      color: var(--faint);
+      font-size: 13px;
+      text-align: center;
+    }
+    .footer-meta a { color: var(--muted); text-decoration: none; }
+    .footer-meta a:hover { color: var(--ember-bright); }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header class="top">
+      <a href="/" class="brand">
+        <img src="shakoshy-icon.png" alt="Shakoshy" />
+        <span>Shakoshy</span>
+      </a>
+      <div class="updated">Last updated &middot; June 6, 2026</div>
+    </header>
+
+    <h1 class="page-title">
+      Privacy Policy
+      <span class="ar">سياسة الخصوصية</span>
+    </h1>
+    <p class="intro">
+      How the Shakoshy mobile app handles your data, and the rights you have over it.
+      Available in English and Arabic. If anything is unclear, email
+      <a href="mailto:support@shakoshy.com" style="color: var(--ember-bright); text-decoration: none;">support@shakoshy.com</a>.
+    </p>
+
+    <div class="columns">
+
+      <!-- ============================ ENGLISH ============================ -->
+      <section class="col" lang="en">
+        <h2>English</h2>
+
+        <h3>1. Who we are</h3>
+        <p>
+          The Shakoshy mobile app ("Shakoshy", "we", "us") is operated by
+          <strong>Muadh Ali Hassan Al-Eryani</strong>, a sole proprietorship registered in
+          the Arab Republic of Egypt. This policy explains what data the app collects,
+          how we use it, and the rights you have. By using Shakoshy you accept this policy.
+        </p>
+
+        <h3>2. Data we collect</h3>
+        <ul>
+          <li><strong>Account info:</strong> name, email address, phone number, user account ID</li>
+          <li><strong>Address:</strong> street, city, postal code, country</li>
+          <li><strong>Location:</strong> approximate and precise location when you grant permission, used to show nearby workers and display maps</li>
+          <li><strong>Photos:</strong> profile photo and any photos you attach to a job request</li>
+          <li><strong>Device identifiers:</strong> Firebase Cloud Messaging (FCM) token for push notifications</li>
+        </ul>
+        <p>
+          We <strong>do not</strong> collect payment information, contacts, calendar,
+          browsing history, audio, health, or message content.
+        </p>
+
+        <h3>3. How we use your data</h3>
+        <ul>
+          <li>Create and manage your account</li>
+          <li>Send transactional emails (confirmations, service updates)</li>
+          <li>Deliver service requests to nearby workers and match you with offers</li>
+          <li>Show photos to workers as part of your job request</li>
+          <li>Send push notifications about offers, messages, and job status</li>
+          <li>Prevent fraud and abuse</li>
+        </ul>
+        <p>We do not use your data for advertising, profiling, or sale to third parties.</p>
+
+        <h3>4. Service providers</h3>
+        <p>We rely on the following service providers, who process limited data on our behalf:</p>
+        <ul>
+          <li><strong>Google Firebase Cloud Messaging</strong> &mdash; push notifications</li>
+          <li><strong>Google Maps Platform</strong> &mdash; map display and geocoding</li>
+          <li><strong>Cloud hosting provider</strong> &mdash; backend infrastructure</li>
+        </ul>
+
+        <h3>5. Data sharing</h3>
+        <p>
+          We do not sell, rent, or share your personal data with third parties for their own
+          marketing. When you post a job request, nearby workers see only what is needed to
+          respond (description, general area, photos). Your full address is shared only after
+          you accept a worker's offer.
+        </p>
+
+        <h3>6. Data retention &amp; deletion</h3>
+        <p>
+          We keep your data while your account is active. You can request deletion at any time:
+        </p>
+        <p>&rarr; <a href="https://shakoshy.com/delete-account">shakoshy.com/delete-account</a></p>
+        <ul>
+          <li>Profile, addresses, job requests, uploaded photos, and FCM token are deleted within <strong>30 days</strong></li>
+          <li>Anonymized records (with no identifying information) may be retained up to <strong>12 months</strong> for fraud prevention and legal compliance</li>
+          <li>Backups are purged within <strong>90 days</strong> of deletion</li>
+        </ul>
+
+        <h3>7. Your rights</h3>
+        <p>
+          Under Egyptian Personal Data Protection Law No. 151 of 2020, you have the right to:
+        </p>
+        <ul>
+          <li>Access your personal data and request a copy</li>
+          <li>Correct inaccurate data</li>
+          <li>Delete your data</li>
+          <li>Withdraw consent for any optional processing</li>
+          <li>Lodge a complaint with the Personal Data Protection Center</li>
+        </ul>
+        <p>To exercise these rights, email <a href="mailto:support@shakoshy.com">support@shakoshy.com</a>.</p>
+
+        <h3>8. Security</h3>
+        <p>
+          We protect your data with industry-standard measures: all traffic between the app and
+          our servers is encrypted with TLS (HTTPS); passwords and authentication tokens are
+          stored in the platform's secure storage (Keychain on iOS, EncryptedSharedPreferences on
+          Android); backend access follows least-privilege controls. If we ever detect a breach
+          that affects your data, we will notify you without undue delay.
+        </p>
+
+        <h3>9. Children's privacy</h3>
+        <p>
+          Shakoshy is not directed at children under 16, and we do not knowingly collect data
+          from anyone under that age. If you believe we have, email
+          <a href="mailto:support@shakoshy.com">support@shakoshy.com</a> and we will delete it.
+        </p>
+
+        <h3>10. International data transfers</h3>
+        <p>
+          Our backend infrastructure is hosted in Europe. Some data may also be processed by
+          Google in regions covered by their standard terms. We rely on standard contractual
+          clauses to keep data protected when it leaves Egypt.
+        </p>
+
+        <h3>11. Changes to this policy</h3>
+        <p>
+          We may update this policy. The "Last updated" date at the top of the page reflects
+          the most recent change. For material changes we will notify you in the app.
+        </p>
+
+        <h3>12. Contact</h3>
+        <p>
+          <strong>Data controller:</strong><br />
+          Muadh Ali Hassan Al-Eryani<br />
+          Trading as "Shakoshy"<br />
+          Registered in: Egypt<br />
+          Email: <a href="mailto:support@shakoshy.com">support@shakoshy.com</a>
+        </p>
+      </section>
+
+      <!-- ============================ ARABIC ============================ -->
+      <section class="col ar" lang="ar" dir="rtl">
+        <h2>العربية</h2>
+
+        <h3>١. من نحن</h3>
+        <p>
+          تطبيق شاكوشي ("شاكوشي"، "نحن") يديره
+          <strong>مُعاذ علي حسن الإرياني</strong>،
+          منشأة فردية مسجلة في جمهورية مصر العربية. توضح هذه السياسة البيانات التي
+          يجمعها التطبيق وكيف نستخدمها وحقوقك المتعلقة بها. باستخدامك التطبيق فإنك
+          توافق على هذه السياسة.
+        </p>
+
+        <h3>٢. البيانات التي نجمعها</h3>
+        <ul>
+          <li><strong>معلومات الحساب:</strong> الاسم، البريد الإلكتروني، رقم الهاتف، معرف المستخدم</li>
+          <li><strong>العنوان:</strong> الشارع، المدينة، الرمز البريدي، الدولة</li>
+          <li><strong>الموقع:</strong> الموقع التقريبي والدقيق عند منح الإذن، لعرض العمال القريبين والخرائط</li>
+          <li><strong>الصور:</strong> صورة الملف الشخصي وأي صور تُرفقها بطلب العمل</li>
+          <li><strong>معرفات الجهاز:</strong> رمز Firebase Cloud Messaging (FCM) لإشعارات الدفع</li>
+        </ul>
+        <p>
+          نحن <strong>لا نجمع</strong> معلومات الدفع، أو جهات الاتصال، أو التقويم،
+          أو سجل التصفح، أو الصوت، أو بيانات الصحة، أو محتوى الرسائل.
+        </p>
+
+        <h3>٣. كيف نستخدم بياناتك</h3>
+        <ul>
+          <li>إنشاء حسابك وإدارته</li>
+          <li>إرسال رسائل بريد إلكتروني خاصة بالحساب (تأكيدات، تحديثات الخدمة)</li>
+          <li>إيصال طلبات الخدمة للعمال القريبين ومطابقتك مع العروض</li>
+          <li>عرض الصور للعمال كجزء من طلب العمل</li>
+          <li>إرسال إشعارات الدفع عن العروض والرسائل وحالة الطلب</li>
+          <li>منع الاحتيال وإساءة الاستخدام</li>
+        </ul>
+        <p>لا نستخدم بياناتك للإعلان أو التنميط أو البيع لأطراف ثالثة.</p>
+
+        <h3>٤. مقدمو الخدمة</h3>
+        <p>نعتمد على مقدمي الخدمة التاليين، الذين يعالجون بيانات محدودة نيابةً عنا:</p>
+        <ul>
+          <li><strong>Google Firebase Cloud Messaging</strong> &mdash; إشعارات الدفع</li>
+          <li><strong>Google Maps Platform</strong> &mdash; عرض الخرائط وتحديد المواقع</li>
+          <li><strong>مزود استضافة سحابية</strong> &mdash; البنية التحتية الخلفية</li>
+        </ul>
+
+        <h3>٥. مشاركة البيانات</h3>
+        <p>
+          نحن لا نبيع أو نؤجر أو نشارك بياناتك الشخصية مع أطراف ثالثة لأغراضهم
+          التسويقية. عند نشر طلب عمل، يرى العمال القريبون فقط ما يلزم للرد (الوصف،
+          المنطقة العامة، الصور). لا يتم مشاركة عنوانك الكامل إلا بعد قبولك لعرض أحد العمال.
+        </p>
+
+        <h3>٦. الاحتفاظ بالبيانات وحذفها</h3>
+        <p>نحتفظ ببياناتك طالما أن حسابك نشط. يمكنك طلب الحذف في أي وقت عبر:</p>
+        <p>&larr; <a href="https://shakoshy.com/delete-account">shakoshy.com/delete-account</a></p>
+        <ul>
+          <li>يتم حذف الملف الشخصي والعناوين وطلبات العمل والصور المرفوعة ورمز FCM خلال <strong>30 يومًا</strong></li>
+          <li>قد نحتفظ بسجلات مجهولة الهوية (دون أي معلومات تعريفية) لمدة تصل إلى <strong>12 شهرًا</strong> لمنع الاحتيال والامتثال القانوني</li>
+          <li>يتم حذف النسخ الاحتياطية خلال <strong>90 يومًا</strong> من الحذف</li>
+        </ul>
+
+        <h3>٧. حقوقك</h3>
+        <p>بموجب قانون حماية البيانات الشخصية المصري رقم 151 لسنة 2020، لديك الحق في:</p>
+        <ul>
+          <li>الوصول إلى بياناتك الشخصية وطلب نسخة منها</li>
+          <li>تصحيح البيانات غير الدقيقة</li>
+          <li>حذف بياناتك</li>
+          <li>سحب موافقتك على أي معالجة اختيارية</li>
+          <li>تقديم شكوى لمركز حماية البيانات الشخصية</li>
+        </ul>
+        <p>لممارسة هذه الحقوق، تواصل عبر <a href="mailto:support@shakoshy.com">support@shakoshy.com</a>.</p>
+
+        <h3>٨. الأمان</h3>
+        <p>
+          نحمي بياناتك بإجراءات معيارية في الصناعة: جميع حركة المرور بين التطبيق
+          وخوادمنا مشفّرة باستخدام TLS (HTTPS)؛ كلمات المرور ورموز المصادقة
+          مخزّنة في التخزين الآمن للنظام (Keychain على iOS و
+          EncryptedSharedPreferences على Android)؛ الوصول للنظام الخلفي يتبع
+          مبدأ أقل الامتيازات. في حال اكتشاف اختراق يؤثر على بياناتك،
+          سنخطرك دون تأخير غير مبرر.
+        </p>
+
+        <h3>٩. خصوصية الأطفال</h3>
+        <p>
+          شاكوشي ليس موجّهًا للأطفال دون 16 عامًا، ولا نجمع بيانات عن قصد من أي شخص
+          دون هذا السن. إذا كنت تعتقد أننا فعلنا ذلك، راسلنا على
+          <a href="mailto:support@shakoshy.com">support@shakoshy.com</a> وسنحذفها.
+        </p>
+
+        <h3>١٠. نقل البيانات دوليًا</h3>
+        <p>
+          بنيتنا التحتية الخلفية مستضافة في أوروبا. قد تعالج Google بعض البيانات في
+          مناطق مشمولة بشروطها القياسية. نعتمد على البنود التعاقدية القياسية لحماية
+          البيانات عند مغادرتها مصر.
+        </p>
+
+        <h3>١١. التغييرات على هذه السياسة</h3>
+        <p>
+          قد نُحدّث هذه السياسة. يعكس تاريخ "آخر تحديث" في أعلى الصفحة آخر تغيير.
+          في حال إجراء تغييرات جوهرية سنخطرك داخل التطبيق.
+        </p>
+
+        <h3>١٢. التواصل</h3>
+        <p>
+          <strong>المسؤول عن البيانات:</strong><br />
+          مُعاذ علي حسن الإرياني<br />
+          يعمل تحت اسم "شاكوشي"<br />
+          مسجل في: مصر<br />
+          البريد: <a href="mailto:support@shakoshy.com">support@shakoshy.com</a>
+        </p>
+      </section>
+
+    </div>
+
+    <div class="footer-meta">
+      &copy; 2026 Shakoshy &middot;
+      <a href="/">Home</a> &middot;
+      <a href="/delete-account">Account deletion</a> &middot;
+      <a href="mailto:support@shakoshy.com">support@shakoshy.com</a>
+    </div>
+
+  </div>
+</body>
+</html>
