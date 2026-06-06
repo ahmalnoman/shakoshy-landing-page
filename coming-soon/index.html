@@ -274,6 +274,12 @@
       color: var(--faint);
       animation: fadeUp 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.8s both;
     }
+    .foot a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .foot a:hover { color: var(--ember-bright); }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 540px) {
@@ -328,7 +334,7 @@
     <p class="launch-date" id="launchDate">Launching June 18, 2026 &middot; App Store &amp; Google Play</p>
   </main>
 
-  <footer class="foot">&copy; 2026 Shakoshy &middot; Middle East &amp; Africa</footer>
+  <footer class="foot">&copy; 2026 Shakoshy &middot; Middle East &amp; Africa &middot; <a href="/privacy">Privacy</a></footer>
 
   <div class="grain" aria-hidden="true"></div>
 
