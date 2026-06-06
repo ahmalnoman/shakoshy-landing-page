@@ -3,6 +3,13 @@
   "installCommand": "",
   "outputDirectory": "coming-soon",
   "framework": null,
+  "redirects": [
+    {
+      "source": "/delete-account",
+      "destination": "https://forms.gle/RyqEjfV1uZ6iQYeA6",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
