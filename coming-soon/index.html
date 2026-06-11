@@ -353,12 +353,30 @@
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 540px) {
+      /* Content is taller than the viewport on phones, so flow from the
+         top and let the page scroll instead of vertically centering —
+         otherwise the bottom items (store badges + Instagram) overflow
+         off-screen and can't be reached. */
+      .wrap {
+        justify-content: flex-start;
+        gap: clamp(1rem, 4vw, 1.5rem);
+      }
       .countdown {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 0.6rem;
+        width: 100%;
+        max-width: 340px;
       }
       .unit { width: 100%; }
+      .stores {
+        width: 100%;
+        max-width: 340px;
+      }
+      .store-badge {
+        flex: 1 1 100%;
+        justify-content: center;
+      }
     }
 
     /* ===== REDUCED MOTION ===== */
