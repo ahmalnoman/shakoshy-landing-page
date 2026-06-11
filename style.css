@@ -911,6 +911,54 @@ img { max-width: 100%; display: block; }
   font-weight: 800;
 }
 
+/* "Soon" badge on store buttons (apps not launched yet) */
+.app-btn {
+  position: relative;
+  cursor: default;
+  pointer-events: none;
+}
+
+.app-btn-soon {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--primary);
+  color: var(--white);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+}
+
+/* Instagram follow button */
+.instagram-cta {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 56px;
+}
+
+.btn-instagram {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  border-radius: var(--radius);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 15px;
+  background: linear-gradient(135deg, #F58529, #DD2A7B 50%, #8134AF 80%, #515BD4);
+  transition: all 0.2s;
+}
+
+.btn-instagram:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  opacity: 0.95;
+}
+
 /* ============================================================
    FOOTER
    ============================================================ */
